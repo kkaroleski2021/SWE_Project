@@ -23,6 +23,7 @@
 - Our website will need to have an organized home page where students can easily navigate to different catagories of items; perhaps a tagging system or several subcategories that allow the user to sift through the sheer amount of objects
 - Our website needs to have an appealing home page that will attract students
 - Our website needs to have some sort of map functionality that allows buyers to see who's offering what closest to them
+- Our website will need to allow users to search for specific items. 
 
 
 ## Issues Successfully Completed

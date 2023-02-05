@@ -17,8 +17,11 @@ package main
 
 import (
 	"net/http"
+	//"time" //commented out rn .. line 45
+	"database/sql"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 
 	/*
 		each package is located in a respective folder in the src dir (where main.go is located)
@@ -33,6 +36,15 @@ var (
 
 func main() {
 	server := gin.Default()
+
+	//use db.Ping() to check if user, pass is valid
+	db, err := sql.Open("mysql", "user:password@/dbname")
+	if err != nil {
+		panic(err) //do proper error handling
+	}
+	//db.SetConnMaaxLifetime(time.Minute * 3) //ensure connections are closed by driver safely before connection is closed by MySQL server, OS, or other middlewares
+	//db.SetMaxOpenConns(10)
+	//db.SetMaxIdleConns(10)
 
 	server.GET("/search", func(ctx *gin.Context) {
 		ctx.JSON(200, search)
@@ -49,4 +61,5 @@ func main() {
 	})
 
 	server.Run(":8080")
+	defer db.Close()
 }
