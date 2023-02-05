@@ -16,7 +16,10 @@ package main
 */
 
 import (
-	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
 	/*
 		each package is located in a respective folder in the src dir (where main.go is located)
 		each package is accessible from main.go by writing "go/<package name>"
@@ -24,7 +27,26 @@ import (
 	"go/entity"
 )
 
+var (
+	search entity.Search
+)
+
 func main() {
-	fmt.Println("test go/")
-	entity.Print()
+	server := gin.Default()
+
+	server.GET("/search", func(ctx *gin.Context) {
+		ctx.JSON(200, search)
+	})
+
+	//"/search" for a specific post
+	server.POST("/search", func(ctx *gin.Context) {
+		err := ctx.BindJSON(&search)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		} else {
+			ctx.JSON(http.StatusOK, gin.H{"message": "Search Input is Valid"})
+		}
+	})
+
+	server.Run(":8080")
 }
