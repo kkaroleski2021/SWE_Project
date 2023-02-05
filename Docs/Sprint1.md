@@ -14,7 +14,7 @@
 - As a college student, I want to be able to buy from other students because I would feel more comfortable meeting another student rather than a random person or someone posing as a student. 
 - As a college student, I want a hub to sell all of my old stuff quickly and easily, so that I don't have to waste time advertising on all the different social medias. 
 - As a college student, I want a dedicated place for students to sell tickets so that they do not have to spam every social media for 4 months straight.
-
+- As a college student, I want to be able to create a profile that is unique to my specific interests. 
 
 
 
