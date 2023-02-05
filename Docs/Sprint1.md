@@ -19,7 +19,8 @@
 
 
 ## Issues to Address
-
+- Our website will need to have an organized home page where students can easily navigate to different catagories of items
+- Our website needs to have an appealing home page that will attract students
 
 
 ## Issues Successfully Completed
