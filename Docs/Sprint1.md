@@ -28,7 +28,9 @@
 
 ## Issues Successfully Completed
 
-
+## Incomplete Issues
+- Our website is still very much in its infancy stage. In order to progress as a team and ensure Swampy Sells is able to come to fruition under the timeframe,
+ we will need to solidify which frameworks we are using and figure out how to connect everything together. 
 
 
 
