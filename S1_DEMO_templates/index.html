@@ -1,0 +1,15 @@
+{{ template "header.html" }}
+
+        <div class="album py-4 bg-light">
+            <div class="container">
+                <h3>{{.Title}}</h3>
+             <!--Loop over the search history-->
+                {{range .searches}}
+                    <p class="card-text">
+                        <h4>{{.Search}}</h4>
+                    </p>
+                {{end}}
+            </div>
+        </div>
+    </body>
+</html>

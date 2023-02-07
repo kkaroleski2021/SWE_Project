@@ -1,24 +1,13 @@
 package main
 
 /*
-	setup:
-	if go.mod does not exist:
-		type in terminal "go mod init go"
-			make sure to type this in the same dir as main.go
-		go.mod should appear in the same folder as main.go
-
-	if go.mod is in the wrong dir:
-		delete go.mod
-		create go.mod using same procedure from above
-
-	if go.mod exists:
-		type "go run main.go" in terminal to run
+	setup: see github_cmds.md
 */
 
 import (
-	"net/http"
+
 	//"time" //commented out rn .. line 45
-	"database/sql"
+	//"database/sql"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -28,6 +17,7 @@ import (
 		each package is accessible from main.go by writing "go/<package name>"
 	*/
 	"go/entity"
+	"go/router"
 )
 
 var (
@@ -36,30 +26,27 @@ var (
 
 func main() {
 	server := gin.Default()
-
-	//use db.Ping() to check if user, pass is valid
-	db, err := sql.Open("mysql", "user:password@/dbname")
-	if err != nil {
-		panic(err) //do proper error handling
-	}
-	//db.SetConnMaaxLifetime(time.Minute * 3) //ensure connections are closed by driver safely before connection is closed by MySQL server, OS, or other middlewares
-	//db.SetMaxOpenConns(10)
-	//db.SetMaxIdleConns(10)
-
-	server.GET("/search", func(ctx *gin.Context) {
-		ctx.JSON(200, search)
+	router.NewRouter(&router.Config{
+		R: server,
 	})
 
-	//"/search" for a specific post
-	server.POST("/search", func(ctx *gin.Context) {
-		err := ctx.BindJSON(&search)
+	/*demo templates for sprint 1*/
+	server.Static("/css", "./S1_DEMO_templates/css")
+	server.LoadHTMLGlob("S1_DEMO_templates/*.html")
+
+	/*//sql stuff in progress
+		db.Ping() checks if user, pass is valid
+		pw may or may not be sensitive? leaving out for now
+		db, err := sql.Open("mysql", "root:PASSWORD@tcp(127.0.0.1:3306)/storeDB")
 		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		} else {
-			ctx.JSON(http.StatusOK, gin.H{"message": "Search Input is Valid"})
+	 	panic(err) //do proper error handling
 		}
-	})
+		db.SetConnMaxLifetime(time.Minute * 3) //ensure connections are closed by driver safely before connection is closed by MySQL server, OS, or other middlewares
+		db.SetMaxOpenConns(10)
+		db.SetMaxIdleConns(10)
+	*/
 
+	//may change to 4200 when adding angular elements
 	server.Run(":8080")
-	defer db.Close()
+	//defer db.Close()
 }
