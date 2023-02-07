@@ -27,14 +27,12 @@
 
 
 ## Issues Successfully Completed
+- A searching functionality foundation has been set. Searches are saved from POST commands and are retrievable through GET commands. Previous searches are also stored so that a user may see their entire search history. 
 
 ## Incomplete Issues
 - Our website is still very much in its infancy stage. In order to progress as a team and ensure Swampy Sells is able to come to fruition under the timeframe,
  we will need to solidify which frameworks we are using and figure out how to connect everything together. 
 
-
-
-## Incomplete Issues
 
 
 

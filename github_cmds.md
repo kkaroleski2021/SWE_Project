@@ -11,9 +11,45 @@ may or may not work. im not an expert
 All git commands done through git bash (or any terminal prob) in a folder containing all docs: \<New Folder>
 
 ## Contents
+- [Angular Setup](#angular-setup)
+- [Starting up Angular in VSC](#starting-angular)
 - [running GO in VSC](#running-in-vsc)
 - [Pull from repo](#pull-from-repo)
 - [Push to Repo (from a pull)](#push-from-a-pull)
+
+
+
+# Angular Setup
+assuming you have not pulled any go files from the repo -- just starting fresh.  
+after creating an angular project using 
+```
+npm new <newAng> (name it frontend or templates or smth) 
+```
+
+in your file explorer
+- create a new folder
+- put \<newAng> inside that new folder.  
+- so now you are in new folder. and \<newAng> folder is the only folder visible
+(you may delete the .git folder inside \<newAng>. idk if its necessary but i did)  
+  
+git bash from the new folder
+``` 
+git init
+git remote add origin <repo url>
+git pull origin master 
+git add * 
+```
+there is already a .gitignore file made automatically by angular. but make sure nothing from node_modules gets added. (you will notice because git add will take a veery long time. just press ctrl + c to stop .. ask if it happens but it shouldnt)
+```
+git commit -m "commit msg"
+git push --set-upstream origin main
+git push 
+```
+
+# Starting Angular
+### TODO: wite the steps for starting up angular after setup
+
+
 
 # Running in VSC
 after pulling go files from repo:  
