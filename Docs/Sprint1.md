@@ -30,6 +30,7 @@
 ## Issues Successfully Completed
 - A searching functionality foundation has been set. Searches are saved from POST commands and are retrievable through GET commands. Previous searches are also stored so that a user may see their entire search history. 
 - A home page has been implemented and includes a catchy title, logo, footer, and subcatagories.
+- The backend team has written code to get, post, put, and delete user data.
 
 ## Incomplete Issues
 - Our website is still very much in its infancy stage. In order to progress as a team and ensure Swampy Sells is able to come to fruition in the specified timeframe,
