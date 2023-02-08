@@ -20,18 +20,20 @@
 
 
 ## Issues to Address
-- Our website will need to have an organized home page where students can easily navigate to different catagories of items; perhaps a tagging system or several subcategories that allow the user to sift through the sheer amount of objects
-- Our website needs to have an appealing home page that will attract students
-- Our website needs to have some sort of map functionality that allows buyers to see who's offering what closest to them
+- Our website will need to have an organized home page where students can easily navigate to different catagories of items; perhaps a tagging system or several subcategories that allow the user to sift through the sheer amount of objects.
+- Our website needs to have an appealing home page that will attract students.
+- Our website needs to have some sort of map functionality that allows buyers to see who's offering what closest to them.
 - Our website will need to allow users to search for specific items. 
+- Our website will need to verify that a user is in fact a UF student, perhaps by inquiring for a UFID and ensuring that it is valid or mandating that the domain name is of "ufl."
 
 
 ## Issues Successfully Completed
 - A searching functionality foundation has been set. Searches are saved from POST commands and are retrievable through GET commands. Previous searches are also stored so that a user may see their entire search history. 
 
 ## Incomplete Issues
-- Our website is still very much in its infancy stage. In order to progress as a team and ensure Swampy Sells is able to come to fruition under the timeframe,
- we will need to solidify which frameworks we are using and figure out how to connect everything together. 
+- Our website is still very much in its infancy stage. In order to progress as a team and ensure Swampy Sells is able to come to fruition in the specified timeframe,
+ we will need to solidify which frameworks we are using and figure out how to connect everything together. We have yet to populate a functional database, ensuring
+ that any PUT or POST requests add that specific user to the database and that a DELETE and UPDATE request delete that user or updating their corresponding data in the database, respectively. 
 
 
 
