@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <app-header></app-header>
 
     <app-home></app-home>
-
+    <app-profiles></app-profiles>
     <!-- routes get injected here -->
     
     <router-outlet></router-outlet>
