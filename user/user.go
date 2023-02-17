@@ -3,6 +3,7 @@ package user
 import (
 	"encoding/json"
 	"fmt"
+
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -13,17 +14,27 @@ import (
 var DB *gorm.DB
 var err error
 
+type UserInterface interface {
+	InitialMigration()
+	GetUsers(w http.ResponseWriter, r *http.Request)
+	GetUser(w http.ResponseWriter, r *http.Request)
+	CreateUser(w http.ResponseWriter, r *http.Request)
+	UpdateUser(w http.ResponseWriter, r *http.Request)
+	DeleteUser(w http.ResponseWriter, r *http.Request)
+	LogIn(w http.ResponseWriter, r *http.Request)
+}
+
 //make sure to enter user and pw after a pull.
 
 // ----------delete user/pw before pushing to github
-const DNS = "user:password@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+const DNS = "user:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
 type User struct {
 	gorm.Model
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
+	Email     string `json:"email" validate:"required,email"`
+	Password  string `json:"password" validate:"required"`
 }
 
 // connected to database
@@ -56,6 +67,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var user User
 	json.NewDecoder(r.Body).Decode(&user)
+	HashPassword(&user)
 	result := DB.Create(&user)
 	if result.Error != nil {
 		fmt.Println(result.Error)
@@ -79,4 +91,19 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 	DB.Delete(&user, params["id"])
 	json.NewEncoder(w).Encode("The user has been successfully deleted!")
+}
+
+// fix this
+func LogIn(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	err := CheckPassword(&user)
+	if err != nil {
+		fmt.Print(err.Error())
+		json.NewEncoder(w).Encode("Username or password is incorrect")
+		//handle this error so user knows they entered something wrong and can't login
+	} else {
+		json.NewEncoder(w).Encode("The user has been successfully logged in")
+	}
 }

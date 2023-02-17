@@ -18,6 +18,7 @@ func initializeRouter() {
 	r.HandleFunc("/users", user.CreateUser).Methods("POST")
 	r.HandleFunc("/users/{id}", user.UpdateUser).Methods("PUT")
 	r.HandleFunc("/users/{id}", user.DeleteUser).Methods("DELETE")
+	r.HandleFunc("/login", user.LogIn).Methods("POST")
 
 	r.HandleFunc("/search", router.Search).Methods("GET")
 	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
