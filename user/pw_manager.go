@@ -27,8 +27,5 @@ func CheckPassword(user *User) error {
 	DB.Where("email = ?", user.Email).Find(&resultUser)
 	err := bcrypt.CompareHashAndPassword([]byte(resultUser.Password), []byte(user.Password))
 	// nil == match
-	if err != nil {
-		panic(err.Error())
-	}
 	return err
 }

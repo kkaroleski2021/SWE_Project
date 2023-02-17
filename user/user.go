@@ -100,7 +100,6 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&user)
 	err := CheckPassword(&user)
 	if err != nil {
-		fmt.Print(err.Error())
 		json.NewEncoder(w).Encode("Username or password is incorrect")
 		//handle this error so user knows they entered something wrong and can't login
 	} else {
