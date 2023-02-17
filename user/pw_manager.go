@@ -1,8 +1,6 @@
 package user
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -22,11 +20,12 @@ func HashPassword(user *User) {
 func CheckPassword(user *User) error {
 	//search for password in database
 	//create a query for passwords in db
-	var resultUser = User{Email: user.Email}
-	DB.Select("password").Find(&resultUser)
 	//find password based on user's email...
-	
-	err := bcrypt.CompareHashAndPassword( , []byte(user.Password))
+
+	//empty user struct to store results of a query
+	var resultUser = User{}
+	DB.Where("email = ?", user.Email).Find(&resultUser)
+	err := bcrypt.CompareHashAndPassword([]byte(resultUser.Password), []byte(user.Password))
 	// nil == match
 	if err != nil {
 		panic(err.Error())
