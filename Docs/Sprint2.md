@@ -12,7 +12,8 @@
 
 ## Work Completed
 - A mysql instance was created in Amazon's Web Service , RDS.  This allows the mysql database to be shared, accessed, and edited among users. Having the database set up allows information to be stored about users.
-
+- Password hashing was implemented in order to protect user's passwords as they are stored in the database. 
+- When a user attempts to log in with their email and password, the program will check with the database to ensure the correct log in credentials.
 
 
 
