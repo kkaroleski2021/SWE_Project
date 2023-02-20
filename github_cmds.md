@@ -36,7 +36,7 @@ git bash from the new folder
 ``` 
 git init
 git remote add origin <repo url>
-git pull origin master 
+git pull origin main 
 git add * 
 ```
 there is already a .gitignore file made automatically by angular. but make sure nothing from node_modules gets added. (you will notice because git add will take a veery long time. just press ctrl + c to stop .. ask if it happens but it shouldnt)
@@ -47,8 +47,22 @@ git push
 ```
 
 # Starting Angular
-### TODO: wite the steps for starting up angular after setup
-
+Create a new folder (prob the easiest way to make sure everything uploads clean)
+git bash from the new folder
+``` 
+git init
+git remote add origin <repo url>
+git pull origin main 
+```
+Use command prompt (vscode terminal didn't work for me)
+``` 
+cd <the new folder>
+cd frontend
+npm install 
+ng serve
+```
+you can open your browser to localhost:9000. 
+localhost:4200 is just angular. 9000 is go and angular.
 
 
 # Running in VSC
