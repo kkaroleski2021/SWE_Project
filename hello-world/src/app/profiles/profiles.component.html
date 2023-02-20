@@ -1,0 +1,127 @@
+<h4>Some Special Items you might be interested in...</h4>
+
+<style>
+    /* Formatting for all the profile boxes */
+    /* Kill me */
+  .profile-box {
+    display: flex;
+    margin: 36px auto 32px;
+    padding: 0px 32px;
+    max-width: 400px;
+    flex-direction: row, column;
+    align-items: center;
+  }
+
+  .content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 52px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .profile-card {
+    all: unset;
+    border-radius: 15px;
+    border: 2.5px solid #0dcce5;
+    background-color: #bff3ff;
+    opacity: .7;
+    height: 400px;
+    width: 295px;
+    margin: 2px 16px 16px;
+    padding: 16px;
+    display: inline-block;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    overflow-wrap: break-word;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+  }
+
+  .profile-container .profile-card:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .profile-card.card-small {
+    height: 16px;
+    width: 168px;
+  }
+
+  .profile-container .profile-card:not(.highlight-card) {
+    cursor: pointer;
+  }
+
+  .profile-container .profile-card:not(.highlight-card):hover {
+    transform: translateY(-3px);
+    opacity: 1;
+    box-shadow: 0 4px 17px rgba(17, 57, 69, 0.35);
+  }
+
+  .profile-container .profile-card:not(.highlight-card):hover .material-icons path {
+    fill: rgb(249, 128, 23);
+    border: 2px solid #00405b;
+  }
+
+  .auto {
+    line-break: auto;
+  }
+
+  .caption {
+    display: block;
+    justify-content: center;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+
+  .sub-caption {
+    display: block;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+
+</style>
+
+<div class="profile-container">
+    <a class="profile-card" target="_blank" rel="noopener" href="http://www.thereisnothinghere.com/">
+        <img src = "assets/images/stuffedAnimalChair.jpg" width="245" height="245" viewBox="0 0 490 490">
+
+        <span class = "caption">Strange Chair</span>
+        <span class= "sub-caption">Seller: Hannah</span>
+        <span class= "sub-caption">Date Listed: 01/14/2023</span>
+
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </a>
+
+      <a class="profile-card" target="_blank" rel="noopener" href="http://www.thereisnothinghere.com/">
+        <img src = "assets/images/clamshellVase.jpg" width="245" height="245" viewBox="0 0 490 490">
+        
+        <span class = "caption">Off-putting Vase</span>
+        <span class= "sub-caption">Seller: Katja</span>
+        <span class= "sub-caption">Date Listed: 02/08/2023</span>
+
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </a>
+  
+      <a class="profile-card" target="_blank" rel="noopener" href="http://www.thereisnothinghere.com/">
+        <img style= "border: 10px rgb(9, 86, 137);" src = "assets/images/grandmasCouch.jpg" width="245" height="245">
+
+        <span class = "caption">Your Grandmother's Couch</span>
+        <span class= "sub-caption">Seller: Your Grandpa</span>
+        <span class= "sub-caption">Date Listed: 05/30/2010</span>
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </a>
+</div>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
