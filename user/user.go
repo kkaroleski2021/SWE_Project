@@ -27,7 +27,7 @@ type UserInterface interface {
 //make sure to enter user and pw after a pull.
 
 // ----------delete user/pw before pushing to github
-const DNS = "admin:3Jt79JChIktDGPJq8RlN@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+const DNS = "user:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
 type User struct {
 	gorm.Model
