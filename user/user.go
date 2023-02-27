@@ -76,6 +76,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Print("here")
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	var user User
@@ -83,6 +84,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&user)
 	DB.Save(&user)
 	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode("The user has been updated")
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
@@ -93,7 +95,6 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("The user has been successfully deleted!")
 }
 
-// fix this
 func LogIn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var user User
@@ -101,8 +102,9 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 	err := CheckPassword(&user)
 	if err != nil {
 		json.NewEncoder(w).Encode("Username or password is incorrect")
-		//handle this error so user knows they entered something wrong and can't login
+		return
 	} else {
 		json.NewEncoder(w).Encode("The user has been successfully logged in")
+		CreateToken(w, &user)
 	}
 }

@@ -34,9 +34,9 @@ func httpHandler() {
 
 	r.HandleFunc("/users", user.GetUsers).Methods("GET")
 	r.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
-	r.HandleFunc("/users", user.CreateUser).Methods("POST")
-	r.HandleFunc("/users/{id}", user.UpdateUser).Methods("PUT")
-	r.HandleFunc("/users/{id}", user.DeleteUser).Methods("DELETE")
+	r.HandleFunc("/signup", user.CreateUser).Methods("POST")
+	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.UpdateUser)).Methods("PUT")
+	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.DeleteUser)).Methods("DELETE")
 	r.HandleFunc("/login", user.LogIn).Methods("POST")
 
 	r.HandleFunc("/search", router.Search).Methods("GET")
