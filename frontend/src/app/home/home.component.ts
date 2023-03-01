@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'a-component',
   template: `
     <section class="hero is-primary is-bold is-fullheight">
   <div class="hero-body">
-  
+      <b-component></b-component>
     
   </div>
 </section>
@@ -19,6 +19,5 @@ import { Component } from '@angular/core';
      `]
 })
 
-export class HomeComponent {
+export class AComponent {}
 
-}
