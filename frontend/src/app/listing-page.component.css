@@ -1,0 +1,250 @@
+/* Some formatting shit right off the bat... */
+img {
+    float: left;
+    border: 3px solid #0c98b7;
+    border-radius: 5px;
+  }
+
+h1 {
+    color:rgb(40, 79, 138);
+
+    text-align: left;
+    font-size: 32px;
+
+    font-family: arial;
+}
+
+p {
+    text-align: justify;
+    font-size: 18px;
+
+    font-family: arial;
+}
+
+table {
+  background-color:rgb(220, 255, 255);
+  border-radius: 25px;
+  width: 1000px;
+  align-self: left;
+}
+
+button {
+  border: none;
+    outline: 0;
+    padding: 10px 20px;
+
+    color: white;
+    background-color: #0c98b7;
+
+    text-align: center;
+    align-self: center;
+    text-decoration: none;
+    cursor: pointer;
+    width: 80%;
+    font-size: 18px;
+
+    display: inline-block;
+    margin: 2px 2px;
+    border-radius: 16px;
+}
+
+.card {
+    background-color:rgb(204, 247, 255);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 1000px;
+    height: 600px;
+
+    margin: auto;
+    text-align: center;
+    padding: 48px;
+
+    font-family: arial;
+  }
+
+  .listing-contents {
+    border-width: 3px;
+    border-color:rgb(36, 53, 103);
+
+    padding: 20px;
+  }
+
+  .price {
+    color: rgb(36, 53, 103);
+    font-size: 20px;
+  }
+
+  .ratings {
+    color:rgb(255, 101, 30);
+    font-size: 18px;
+  }
+  
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 10px 20px;
+
+    color: white;
+    background-color: #0c98b7;
+
+    text-align: center;
+    align-self: center;
+    text-decoration: none;
+    cursor: pointer;
+    width: 80%;
+    font-size: 18px;
+
+    display: inline-block;
+    margin: 2px 2px;
+    border-radius: 16px;
+  }
+  
+* {
+  box-sizing: border-box;
+}
+
+.card button:hover {
+    background-color:rgb(255, 101, 30);
+    color:rgb(255, 255, 255);
+}
+
+button:hover {
+    background-color:#e97a12;
+    color:rgb(255, 255, 255);
+}
+
+
+
+
+  /* Columns stuff */
+  * {
+    box-sizing: border-box;
+  }
+  
+  .container {
+    padding: 64px;
+  }
+  
+  /* Clear floats */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both
+  }
+  
+  /* 2/3 column */
+  .column-66 {
+    float: left;
+    width: 66.66666%;
+    padding: 20px;
+  }
+  
+  /* 1/3 column */
+  .column-33 {
+    float: left;
+    width: 33.33333%;
+    padding: 20px;
+  }
+  
+
+
+  /*Star ratings for customers*/
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: arial;
+    margin: 0 auto; /* Center website */
+    max-width: 800px; /* Max width */
+    padding: 20px;
+  }
+  
+  .heading {
+    font-size: 25px;
+    margin-right: 25px;
+  }
+  
+  .fa {
+    font-size: 25px;
+  }
+  
+  .checked {
+    color: orange;
+  }
+  
+
+  /* Three column layout */
+  .side {
+    float: left;
+    width: 15%;
+    margin-top: 20px;
+    font-family: arial;
+    color:rgb(32, 32, 32);
+  }
+  
+  .middle {
+    float: left;
+    width: 70%;
+    margin-top: 20px;
+  }
+  
+  /* Place text to the right */
+  .right {
+    text-align: left;
+    padding-left: 20px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The bar container */
+  .bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Individual bars */
+  .bar-5 {width: 40%; height: 18px; background-color: #0c98e9;}
+  .bar-4 {width: 10%; height: 18px; background-color: #17cafb;}
+  .bar-3 {width: 5%; height: 18px; background-color: #21e881;}
+  .bar-2 {width: 13%; height: 18px; background-color: #fcb233;}
+  .bar-1 {width: 32%; height: 18px; background-color: #ff6404;}
+  
+  /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+  @media (max-width: 400px) {
+    .side, .middle {
+      width: 100%;
+    }
+    /* Hide the right column on small screens */
+    .right {
+      display: none;
+    }
+  }
+
+  /* Add responsiveness - make the columns appear on top of each other instead of next to each other on small screens */
+  @media screen and (max-width: 1000px) {
+    .column-66,
+    .column-33 {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .zoom {
+    padding: 0px;
+    transition: transform .2s; /* Animation */
+    width: 450px;
+    height: 450px;
+    margin: 0 auto;
+  }
+  
+  .zoom:hover {
+    transform: scale(1.25);
+    border: 3px solid #e97a12;
+  }
