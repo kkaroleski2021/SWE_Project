@@ -10,6 +10,8 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
@@ -172,7 +174,9 @@ func Test_LogIn(t *testing.T) {
 }
 
 func Test_Search(t *testing.T) {
-	request, _ := http.NewRequest("POST", "/search", nil)
+	data := url.Values{}
+	data.Set("search", "pc")
+	request, _ := http.NewRequest("POST", "/search", strings.NewReader(data.Encode()))
 	response := httptest.NewRecorder()
 	Router().ServeHTTP(response, request)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
