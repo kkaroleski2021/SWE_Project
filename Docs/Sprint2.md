@@ -64,7 +64,7 @@ describe('AppComponent', () => {
   it('should set image path as expected', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const ele = fixture.debugElement.nativeElement.querySelectorAll('img');
-    expect(ele[1]['src']).toContain('assets/images/stuffedAnimalChair.jpg'); // if you dont have `id` in `img` , you need to provide index as `ele[index]`
+    expect(ele[1]['src']).toContain('assets/images/stuffedAnimalChair.jpg');
     expect(ele[2]['src']).toContain('assets/images/clamshellVase.jpg');
     expect(ele[3]['src']).toContain('assets/images/grandmasCouch.jpg');
     expect(ele[4]['src']).toContain('assets/images/clamshellVase.jpg');
