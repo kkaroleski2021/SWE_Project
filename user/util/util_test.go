@@ -98,24 +98,20 @@ func Router() *mux.Router {
 	return r
 }
 
-/*
-	func Test_GetUser(t *testing.T) {
-		request, _ := http.NewRequest("GET", "/users", nil)
-		response := httptest.NewRecorder()
-		Router().ServeHTTP(response, request)
-		assert.Equal(t, 200, response.Code, "OK response is expected")
-	}
-*/
 func Test_GetUser(t *testing.T) {
+	request, _ := http.NewRequest("GET", "/users", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+}
+
+func Test_GetUserz(t *testing.T) {
 	/*request, _ := http.NewRequest("GET", "/users", nil)
 	response := httptest.NewRecorder()
 	Router().ServeHTTP(response, request)
 	assert.Equal(t, 200, response.Code, "OK response is expected")*/
 
-	//http.NewRequest()
-	//url
 	request, err := http.NewRequest("GET", "http://localhost:9000/users/10", nil)
-
 	request.Header.Set("Content-Type", "application/json")
 
 	if err != nil {
@@ -125,7 +121,7 @@ func Test_GetUser(t *testing.T) {
 	//Response Writer, *Request
 	handler := http.HandlerFunc(user.GetUser)
 
-	handler.ServeHTTP(response, request)
+	handler.ServeHTTP(response, request) //throws an exception here
 
 	if status := response.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
