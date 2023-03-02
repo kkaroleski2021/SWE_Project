@@ -13,6 +13,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	//"net/http/httptest"
 	//"path/filepath"
@@ -43,18 +44,17 @@ func EncodeJSONResponse(w http.ResponseWriter, response interface{}) {
 	}
 }
 
-func TestSomeHandler(t *testing.T) {
+func TestSearch(t *testing.T) {
 	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
 	// pass 'nil' as the third parameter.
 	// req, err := http.NewRequest("GET", "/some-endpoint", nil)
-	req, err := http.NewRequest("GET", "/users", nil)
+	req, err := http.NewRequest("GET", "/search", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(router.Search)
-
 	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
 	// directly and pass in our Request and ResponseRecorder.
 	handler.ServeHTTP(rr, req)
@@ -66,24 +66,115 @@ func TestSomeHandler(t *testing.T) {
 
 }
 
-func Router() *mux.Router {
-	router := mux.NewRouter()
-	router.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
-	return router
+func Test_SearchHistory(t *testing.T) {
+	request, err := http.NewRequest("GET", "/searchhistory", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	response := httptest.NewRecorder()
+	handler := http.HandlerFunc(router.SearchHistory)
+
+	handler.ServeHTTP(response, request)
+
+	if status := response.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
 }
 
-/*create tests for
--getUsers
--getUser
--CreateUser
--updateUser
--deleteUser
--LogIn*/
+func Router() *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
+	r.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
+	r.HandleFunc("/signup", user.CreateUser).Methods("POST")
+	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.UpdateUser)).Methods("PUT")
+	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.DeleteUser)).Methods("DELETE")
+	r.HandleFunc("/login", user.LogIn).Methods("POST")
+	r.HandleFunc("/search", router.Search).Methods("GET")
+	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
+	r.HandleFunc("/search", router.SearchPost).Methods("POST")
 
-func Test_GetUsers(t *testing.T) {
-	request, _ := http.NewRequest("GET", "/users/{id}", nil)
+	return r
+}
+
+/*
+	func Test_GetUser(t *testing.T) {
+		request, _ := http.NewRequest("GET", "/users", nil)
+		response := httptest.NewRecorder()
+		Router().ServeHTTP(response, request)
+		assert.Equal(t, 200, response.Code, "OK response is expected")
+	}
+*/
+func Test_GetUser(t *testing.T) {
+	/*request, _ := http.NewRequest("GET", "/users", nil)
 	response := httptest.NewRecorder()
 	Router().ServeHTTP(response, request)
-	assert.Equal(t, 404, response.Code, "OK response is expected")
+	assert.Equal(t, 200, response.Code, "OK response is expected")*/
+
+	//http.NewRequest()
+	//url
+	request, err := http.NewRequest("GET", "http://localhost:9000/users/10", nil)
+
+	request.Header.Set("Content-Type", "application/json")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	response := httptest.NewRecorder()
+	//Response Writer, *Request
+	handler := http.HandlerFunc(user.GetUser)
+
+	handler.ServeHTTP(response, request)
+
+	if status := response.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	/*fmt.Println("\nThis is the response body: ", response.Body)
+	fmt.Println("This is the response: ", response)
+	fmt.Println("This is the response BODY STRING: ", response.Body.String())
+	fmt.Println()*/
+}
+
+func Test_CreateUser(t *testing.T) {
+	request, _ := http.NewRequest("GET", "/signup", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	require.Equal(t, http.StatusOK, response.Code)
+	//assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_UpdateUser(t *testing.T) {
+	request, _ := http.NewRequest("PUT", "/users/{id}", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_DeleteUser(t *testing.T) {
+	request, _ := http.NewRequest("DELETE", "/users/{id}", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_LogIn(t *testing.T) {
+	request, _ := http.NewRequest("POST", "/login", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_Search(t *testing.T) {
+	request, _ := http.NewRequest("POST", "/search", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
 	fmt.Println(response.Body)
 }
