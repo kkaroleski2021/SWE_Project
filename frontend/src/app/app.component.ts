@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
     
     <!-- routes get injected here -->
     
+    <app-listing-page></app-listing-page>
     <router-outlet></router-outlet>
     <!-- footer -->
     <app-footer></app-footer>
