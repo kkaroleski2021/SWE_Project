@@ -17,6 +17,7 @@
 - JWT authorization has begun to be implemented. When a user logs in, they will receive a JWT which will allow them to access certain features such as modifying their password. Certain API requests will now be protected and require a valid JWT to access.
 - The user can hover over a catagory in the menu to select a sub-catagory of listings.
 - Both front-end work has been successfully combined into one cohesive home page.
+- Two Cypress tests have been applied to the frontend code and both passed.
 
 
 ## Front-End
@@ -26,7 +27,19 @@ is there a difference between cypress and unit ? --- delete cypress if no differ
 - write unit tests here  
 
 ### Cypress Tests
-- write cypress tests here  
+describe('My First Test', () => {
+  it('visits the home page', () => {
+    cy.visit('http://localhost:4200')
+  })
+})
+
+describe('My Second Test', () => {
+  it('finds the content "Tickets"', () => {
+    cy.visit('http://localhost:4200')
+
+    cy.contains('Tickets')
+  })
+})
 
 
 
