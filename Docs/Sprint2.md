@@ -53,7 +53,7 @@ describe('My Second Test', () => {
 |------------------|--------|
 | "/users"         | GET    |
 | "/users/{id}"    | GET    |
-| "/users/{id}"    | POST   |
+| "/users/{id}"    | PUT    |
 | "/users/{id}"    | DELETE |
 | "/signup"        | POST   |
 | "/login"         | POST   |
@@ -102,7 +102,7 @@ Response Format:
 ```
 
 
-#### "/users/{id}" - POST 
+#### "/users/{id}" - PUT 
 This method updates the user by id.  
 Must have a JWT authorization token.  
 Request Format: anything that is intended to be changed.
