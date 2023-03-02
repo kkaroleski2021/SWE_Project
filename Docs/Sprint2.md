@@ -1,5 +1,7 @@
 # Swampy Sells : Sprint 2
 
+## Video Link: https://youtu.be/NJGJS-FYA2A
+
 ## Contents
 - [Work Completed](#work-completed)
 - [Front-End](#front-end)  
@@ -25,7 +27,7 @@
 
 ### Unit Tests
 - NOTE: Most of these are the default angular ones, but the one at the bottom used to see if the images rendered was homemade - not sure if it actually works though
-
+```
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -70,8 +72,10 @@ describe('AppComponent', () => {
     expect(ele[4]['src']).toContain('assets/images/clamshellVase.jpg');
 });
 });
+```
 
 ### Cypress Tests
+```
 describe('My First Test', () => {
   it('visits the home page', () => {
     cy.visit('http://localhost:4200')
@@ -85,12 +89,157 @@ describe('My Second Test', () => {
     cy.contains('Tickets')
   })
 })
-
-
+```
 
 ## Back-End
 ### Unit Tests
-- write unit tests here
+```
+func TestSearch(t *testing.T) {
+	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
+	// pass 'nil' as the third parameter.
+	// req, err := http.NewRequest("GET", "/some-endpoint", nil)
+	req, err := http.NewRequest("GET", "/search", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(router.Search)
+	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
+	// directly and pass in our Request and ResponseRecorder.
+	handler.ServeHTTP(rr, req)
+	// Check the status code is what we expect.
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+}
+
+func Test_SearchHistory(t *testing.T) {
+	request, err := http.NewRequest("GET", "/searchhistory", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	response := httptest.NewRecorder()
+	handler := http.HandlerFunc(router.SearchHistory)
+
+	handler.ServeHTTP(response, request)
+
+	if status := response.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+}
+
+func Test_TrialGetUser(t *testing.T) {
+	//var User user.User
+	request, err := http.NewRequest("GET", "/users", nil)
+	//request.Header.Set("Content-Type", "application/json")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	response := httptest.NewRecorder()
+	handler := http.HandlerFunc(user.GetUser)
+
+	handler.ServeHTTP(response, request)
+
+	//Router().ServeHTTP(response, request)
+
+	if status := response.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+}
+
+func Test_GetUser(t *testing.T) {
+	var User user.User
+	request, _ := http.NewRequest("GET", "/users", nil)
+
+	if request != nil {
+		fmt.Println("we are in here")
+		fmt.Println(User.ID)
+	}
+
+	response := httptest.NewRecorder()
+	//handler := http.HandlerFunc(user.GetUser)
+
+	fmt.Println("Response: ", response)
+
+	fmt.Println("response code: ", response.Code)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+}
+
+func Test_GetUsers(t *testing.T) {
+
+	request, err := http.NewRequest("GET", "users/{id}", nil)
+	request.Header.Set("Content-Type", "application/json")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	response := httptest.NewRecorder()
+	//Response Writer, *Request
+	handler := http.HandlerFunc(user.GetUser)
+
+	handler.ServeHTTP(response, request) //throws an exception here
+
+	if status := response.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+}
+
+func Test_CreateUser(t *testing.T) {
+	request, _ := http.NewRequest("GET", "/signup", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	//require.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_UpdateUser(t *testing.T) {
+	request, _ := http.NewRequest("PUT", "/users/{id}", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_DeleteUser(t *testing.T) {
+	request, _ := http.NewRequest("DELETE", "/users/{id}", nil)
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_LogIn(t *testing.T) {
+	data := url.Values{}
+	data.Set("login", "User")
+	request, _ := http.NewRequest("POST", "/login", strings.NewReader(data.Encode()))
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+func Test_Search(t *testing.T) {
+	data := url.Values{}
+	data.Set("search", "pc")
+	request, _ := http.NewRequest("POST", "/search", strings.NewReader(data.Encode()))
+	response := httptest.NewRecorder()
+	Router().ServeHTTP(response, request)
+	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(response.Body)
+}
+
+```
 
 ### API Documentation
 
