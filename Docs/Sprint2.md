@@ -20,8 +20,7 @@
 - Two Cypress tests have been applied to the frontend code and both passed.
 
 
-## Front-End
-is there a difference between cypress and unit ? --- delete cypress if no difference  
+## Front-End  
 
 ### Unit Tests
 - write unit tests here  
