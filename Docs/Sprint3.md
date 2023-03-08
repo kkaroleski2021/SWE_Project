@@ -1,27 +1,22 @@
 # Swampy Sells : Sprint 2
 
-## Video Link: https://youtu.be/NJGJS-FYA2A
+## Video Link: 
 
 ## Contents
 - [Work Completed](#work-completed)
 - [Front-End](#front-end)  
     - [Unit tests](#unit-tests)
+    - [New Unit Tests](#new-unit-tests)
     - [Cypress tests](#cypress-tests)
+    - [New Cypress Tests](#new-cypress-tests)
 - [Back-End](#back-end) 
     - [Unit tests](#unit-tests-1)
+    - [New Unit Tests](#new-unit-tests-1)
     - [API Documentation](#api-documentation)
 
 
 ## Work Completed
-- A mysql instance was created in Amazon's Web Service , RDS.  This allows the mysql database to be shared, accessed, and edited among users. Having the database set up allows information to be stored about users.
-- Password hashing was implemented in order to protect user's passwords as they are stored in the database. 
-- When a user attempts to log in with their email and password, the program will check with the database to ensure the correct log in credentials.
-- JWT authorization has begun to be implemented. When a user logs in, they will receive a JWT which will allow them to access certain features such as modifying their password. Certain API requests will now be protected and require a valid JWT to access.
-- The user can hover over a catagory in the menu to select a sub-catagory of listings.
-- Work has begun creating a listing page that outlines the details of the listing, include an image, description from the seller, product rating based on user feedback, price, and item condition. In future sprints, we hope to both create the actual separate page instead of having all the components on the home page, and perhaps implement the mapping function so users can see how close they are to the seller. Additionally, future sprints will see us collecting the data (seller name, product image/price/condition/description/seller location, etc.) so we can stop hardcoding in example blurbs
-- Both front-end work has been successfully combined into one cohesive home page.
-- Two Cypress tests have been applied to the frontend code and both passed.
-
+- 
 
 ## Front-End  
 
@@ -74,6 +69,10 @@ describe('AppComponent', () => {
 });
 ```
 
+### New Unit Tests
+
+
+
 ### Cypress Tests
 ```
 describe('My First Test', () => {
@@ -90,6 +89,14 @@ describe('My Second Test', () => {
   })
 })
 ```
+
+
+### New Cypress Tests
+
+
+
+
+
 
 ## Back-End
 ### Unit Tests
@@ -240,6 +247,14 @@ func Test_Search(t *testing.T) {
 }
 
 ```
+
+
+### New Unit Tests
+
+
+
+
+
 
 ### API Documentation
 
