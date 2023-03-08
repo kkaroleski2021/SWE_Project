@@ -40,7 +40,6 @@ func CreateToken(w http.ResponseWriter, user *User) {
 }
 
 func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	fmt.Print("inside val mid")
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
 		authHeader := req.Header.Get("authorization")
@@ -64,7 +63,6 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 		} else {
-			fmt.Print("length was != 2")
 			json.NewEncoder(w).Encode("An authorization header is required")
 			return
 		}
