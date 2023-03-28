@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
     <app-home></app-home>
     
     <app-profiles></app-profiles>
+    <app-listing-page></app-listing-page>
 
     <!-- routes get injected here -->
     
