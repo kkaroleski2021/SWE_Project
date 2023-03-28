@@ -34,6 +34,16 @@ func CreateToken(w http.ResponseWriter, user *User) {
 	response := map[string]interface{}{"status": true,
 		"message": "success"}
 	response["data"] = JwtToken{AccessToken: tokenString}
+
+	//new session stuff
+	expiresAt := time.Now().Add(120 * time.Second)
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_token",
+		Value:   tokenString,
+		Expires: expiresAt,
+	})
+	//end of new session stuff
+
 	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 	return

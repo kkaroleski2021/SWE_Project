@@ -12,6 +12,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// make sure to enter user and pw after a pull.
+// ----------delete user/pw before pushing to github
+const DNS = "user:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+
 func getOrigin() *url.URL {
 	origin, _ := url.Parse("http://localhost:4200")
 	return origin
@@ -55,7 +59,7 @@ func httpHandler() {
 }
 
 func main() {
-	user.InitialMigration()
+	user.InitialMigration(DNS)
+	product.InitialMigration(DNS)
 	httpHandler()
-
 }

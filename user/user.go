@@ -15,7 +15,7 @@ var DB *gorm.DB
 var err error
 
 type UserInterface interface {
-	InitialMigration()
+	InitialMigration(DNS string)
 	GetUsers(w http.ResponseWriter, r *http.Request)
 	GetUser(w http.ResponseWriter, r *http.Request)
 	CreateUser(w http.ResponseWriter, r *http.Request)
@@ -23,10 +23,6 @@ type UserInterface interface {
 	DeleteUser(w http.ResponseWriter, r *http.Request)
 	LogIn(w http.ResponseWriter, r *http.Request)
 }
-
-// make sure to enter user and pw after a pull.
-// ----------delete user/pw before pushing to github
-const DNS = "admin:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
 type User struct {
 	gorm.Model
@@ -37,7 +33,7 @@ type User struct {
 }
 
 // connected to database
-func InitialMigration() {
+func InitialMigration(DNS string) {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
