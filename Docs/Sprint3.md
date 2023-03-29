@@ -22,7 +22,11 @@
 	- When a user logs in or signs up, they will be given a cookie. This cookie tells the system that user id #x is logged in. 
 	- This cookie grants access to updating and deleting the user associated with that id. 
 	- It also allows user to upload products which will be saved with their respective id.
--  
+-  The ability to upload multiple images for a product was implemented. 
+	- These images will be saved to a file in 
+	```/frontend/src/assets/uploads```. Several pieces of information will be stored including the filepath and the associated product ID in a table in the database.  
+- Further work on areas surrounding uploading and displaying product images will be handled in the future.
+- 
 
 ## Front-End  
 
