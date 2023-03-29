@@ -1,8 +1,6 @@
 package product
 
 import (
-	//"go/user"
-
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -49,11 +47,11 @@ func GetPathID(r *http.Request) int {
 }
 
 func AddProduct(w http.ResponseWriter, r *http.Request) {
-	var id = GetPathID(r)
+	//var id = GetPathID(r)
 	w.Header().Set("Content-Type", "application/json")
 	var product Product
 	json.NewDecoder(r.Body).Decode(&product)
-	product.UserId = id
+	product.UserId = r.Context().Value("request_id").(int)
 	// figure out tags
 	result := DB.Create(&product)
 	if result.Error != nil {

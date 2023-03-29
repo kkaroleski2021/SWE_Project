@@ -63,11 +63,15 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 	json.NewDecoder(r.Body).Decode(&user)
 	HashPassword(&user)
+
 	result := DB.Create(&user)
 	if result.Error != nil {
 		fmt.Println(result.Error)
+	} else {
+		json.NewEncoder(w).Encode(user)
+		CreateToken(w, &user)
+		SetCookie(w, r, &user)
 	}
-	json.NewEncoder(w).Encode(user)
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
@@ -99,7 +103,10 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Username or password is incorrect")
 		return
 	} else {
+		var resultUser User
+		DB.Where("email = ?", user.Email).Find(&resultUser)
+		SetCookie(w, r, &resultUser) //must set cookie before writing anything to response
+		CreateToken(w, &resultUser)
 		json.NewEncoder(w).Encode("The user has been successfully logged in")
-		CreateToken(w, &user)
 	}
 }

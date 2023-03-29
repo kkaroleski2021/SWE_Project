@@ -46,7 +46,7 @@ func httpHandler() {
 	r.HandleFunc("/login", user.LogIn).Methods("POST")
 
 	//Product api
-	r.HandleFunc("/newlisting/{id}", user.ValidateMiddleware(product.AddProduct)).Methods("POST")
+	r.HandleFunc("/newlisting", user.ValidateToken(product.AddProduct)).Methods("POST")
 
 	// Search api
 	r.HandleFunc("/search", router.Search).Methods("GET")
