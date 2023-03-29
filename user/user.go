@@ -24,9 +24,7 @@ type UserInterface interface {
 	LogIn(w http.ResponseWriter, r *http.Request)
 }
 
-// make sure to enter user and pw after a pull.
-// ----------delete user/pw before pushing to github
-const DNS = "natasha:SwampySellsDB@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+// DNS moved to main.go
 
 // =======
 // >>>>>>> 008dee776dd440d1090f9dda7fcb73acb73b4072
@@ -75,7 +73,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(result.Error)
 	} else {
 		json.NewEncoder(w).Encode(user)
-		CreateToken(w, &user)
 		SetCookie(w, r, &user)
 	}
 }
@@ -83,9 +80,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Print("here")
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
+	var id = r.Context().Value("request_id").(int)
 	var user User
-	DB.First(&user, params["id"])
+	DB.First(&user, id)
 	json.NewDecoder(r.Body).Decode(&user)
 	DB.Save(&user)
 	json.NewEncoder(w).Encode(user)
@@ -94,9 +91,9 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
+	var id = r.Context().Value("request_id").(int)
 	var user User
-	DB.Delete(&user, params["id"])
+	DB.Delete(&user, id)
 	json.NewEncoder(w).Encode("The user has been successfully deleted!")
 }
 
@@ -112,7 +109,6 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 		var resultUser User
 		DB.Where("email = ?", user.Email).Find(&resultUser)
 		SetCookie(w, r, &resultUser) //must set cookie before writing anything to response
-		CreateToken(w, &resultUser)
 		json.NewEncoder(w).Encode("The user has been successfully logged in")
 	}
 }
