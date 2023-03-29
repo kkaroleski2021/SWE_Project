@@ -5,20 +5,30 @@
 ## Contents
 - [Work Completed](#work-completed)
 - [Front-End](#front-end)  
-    - [Unit tests](#unit-tests)
-    - [New Unit Tests](#new-unit-tests)
-    - [Cypress tests](#cypress-tests)
+	- [New Unit Tests](#new-unit-tests)
+    - [Unit tests](#unit-tests) 
     - [New Cypress Tests](#new-cypress-tests)
+	- [Cypress tests](#cypress-tests)
 - [Back-End](#back-end) 
-    - [Unit tests](#unit-tests-1)
     - [New Unit Tests](#new-unit-tests-1)
+	- [Unit tests](#unit-tests-1)
     - [API Documentation](#api-documentation)
 
 
 ## Work Completed
-- 
+- The ability to upload products to a product table in the database was added.
+- The product currently has several fields and it linked to the respective user by id (more on that below).  
+- Due to the complexity of JWT authentication, we have opted for a more simplistic cookie session method of authenticating users. This method supports url paths without the need for user id to be included. 
+	- When a user logs in or signs up, they will be given a cookie. This cookie tells the system that user id #x is logged in. 
+	- This cookie grants access to updating and deleting the user associated with that id. 
+	- It also allows user to upload products which will be saved with their respective id.
+-  
 
 ## Front-End  
+
+
+### New Unit Tests
+
 
 ### Unit Tests
 - NOTE: Most of these are the default angular ones, but the one at the bottom used to see if the images rendered was homemade - not sure if it actually works though
@@ -69,8 +79,7 @@ describe('AppComponent', () => {
 });
 ```
 
-### New Unit Tests
-
+### New Cypress Tests
 
 
 ### Cypress Tests
@@ -91,14 +100,19 @@ describe('My Second Test', () => {
 ```
 
 
-### New Cypress Tests
-
-
-
 
 
 
 ## Back-End
+
+
+
+### New Unit Tests
+
+
+
+
+
 ### Unit Tests
 ```
 func TestSearch(t *testing.T) {
@@ -247,13 +261,6 @@ func Test_Search(t *testing.T) {
 }
 
 ```
-
-
-### New Unit Tests
-
-
-
-
 
 
 ### API Documentation
