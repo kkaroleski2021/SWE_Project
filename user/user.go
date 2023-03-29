@@ -15,7 +15,7 @@ var DB *gorm.DB
 var err error
 
 type UserInterface interface {
-	InitialMigration()
+	InitialMigration(DNS string)
 	GetUsers(w http.ResponseWriter, r *http.Request)
 	GetUser(w http.ResponseWriter, r *http.Request)
 	CreateUser(w http.ResponseWriter, r *http.Request)
@@ -28,6 +28,8 @@ type UserInterface interface {
 // ----------delete user/pw before pushing to github
 const DNS = "natasha:SwampySellsDB@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
+// =======
+// >>>>>>> 008dee776dd440d1090f9dda7fcb73acb73b4072
 type User struct {
 	gorm.Model
 	FirstName string `json:"firstname"`
@@ -37,7 +39,7 @@ type User struct {
 }
 
 // connected to database
-func InitialMigration() {
+func InitialMigration(DNS string) {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
@@ -67,11 +69,15 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 	json.NewDecoder(r.Body).Decode(&user)
 	HashPassword(&user)
+
 	result := DB.Create(&user)
 	if result.Error != nil {
 		fmt.Println(result.Error)
+	} else {
+		json.NewEncoder(w).Encode(user)
+		CreateToken(w, &user)
+		SetCookie(w, r, &user)
 	}
-	json.NewEncoder(w).Encode(user)
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
@@ -103,7 +109,10 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Username or password is incorrect")
 		return
 	} else {
+		var resultUser User
+		DB.Where("email = ?", user.Email).Find(&resultUser)
+		SetCookie(w, r, &resultUser) //must set cookie before writing anything to response
+		CreateToken(w, &resultUser)
 		json.NewEncoder(w).Encode("The user has been successfully logged in")
-		CreateToken(w, &user)
 	}
 }
