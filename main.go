@@ -6,6 +6,7 @@ import (
 	"go/user"
 	"log"
 	"net/http"
+
 	"net/http/httputil"
 	"net/url"
 
@@ -35,7 +36,7 @@ var AngularHandler = &httputil.ReverseProxy{Director: director}
 
 func httpHandler() {
 	r := mux.NewRouter()
-	// r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/src/app")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("frontend/src/app")))
 
 	//User api
 	r.HandleFunc("/users", user.GetUsers).Methods("GET")
