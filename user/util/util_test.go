@@ -122,40 +122,38 @@ func Test_TrialGetUser(t *testing.T) {
 
 func Test_GetUser(t *testing.T) {
 	var User user.User
-	request, _ := http.NewRequest("GET", "/users", nil)
-
+	request, _ := http.NewRequest("GET", "/users/{id}", nil)
 	if request != nil {
 		fmt.Println("we are in here")
 		fmt.Println(User.ID)
 	}
-
 	response := httptest.NewRecorder()
 	//handler := http.HandlerFunc(user.GetUser)
-
-	fmt.Println("Response: ", response)
-
-	fmt.Println("response code: ", response.Code)
+	//fmt.Println("Response: ", response)
+	//fmt.Println("response code: ", response.Code)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
 }
 
 func Test_GetUsers(t *testing.T) {
+	request, err := http.NewRequest("GET", "/users", nil)
 
-	request, err := http.NewRequest("GET", "users/{id}", nil)
-	request.Header.Set("Content-Type", "application/json")
-
+	//request.Header.Set("Content-Type", "application/json")
 	if err != nil {
+		fmt.Println("we are in here")
 		t.Fatal(err)
 	}
+
+	defer request.Body.Close()
 	response := httptest.NewRecorder()
 	//Response Writer, *Request
-	handler := http.HandlerFunc(user.GetUser)
-
+	handler := http.HandlerFunc(user.GetUsers)
 	handler.ServeHTTP(response, request) //throws an exception here
-
 	if status := response.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
+	fmt.Println("Response: ", response)
+	fmt.Println("response code: ", response.Code)
 
 }
 

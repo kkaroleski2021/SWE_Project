@@ -1,0 +1,22 @@
+#import datetime
+
+test_name: "Integration test with Tavern"
+
+stages:
+
+- name: "GetUsers"
+  request:
+    url: "http://localhost:9000/users/14"
+    method: GET
+  response:
+    status_code: 200
+    #json: 
+    #    ID: 14
+    #   CreatedAt: datetime(2023, 3, 1, 22, 29, 31, 286000, tzinfo=datetime.timezone.utc) #2023-03-01 22:29:31.286000+00:00 #2023-03-01T22:29:31.286Z #datetime.datetime(2023, 3, 1, 22, 29, 31, 286000, tzinfo=datetime.timezone.utc)"
+    #    UpdatedAt: datetime(2023, 3, 1, 22, 29, 31, 286000, tzinfo=datetime.timezone.utc) #2023-03-01 22:29:31.286000+00:00 #2023-03-01T22:29:31.286Z #datetime.datetime(2023, 3, 1, 22, 29, 31, 286000, tzinfo=datetime.timezone.utc)
+    #    DeletedAt: null
+    #    firstname: natasha
+    #    lastname: sthilaire
+    #    email: mileyan25@gmail.com
+    #    password: $2a$10$JJ7gDSb9vN7UiwBRdRZK0OzESazKN.R758b.Je1KkfB2qrQnOYmrm
+

@@ -1,0 +1,13 @@
+test_name: "Non existing user"
+
+stages:
+
+- name: "GetUsers"
+  request:
+    url: "http://localhost:9000/users/1"
+    method: POST
+  response:
+    status_code: 405
+    save: 
+      $ext:
+        function:  tavern_utils:save_response
