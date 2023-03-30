@@ -1,6 +1,8 @@
 package product
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 //this file will contain the 'entity' (product) model --> related structs, arrays, etc to be used in product package
 
@@ -10,6 +12,15 @@ type Product struct {
 	Name   string `json:"name" validate:"required"`
 	Tags   string `json:"tags"`
 	Price  int    `json:"price" validate:"required"`
+}
+
+type Upfile struct {
+	gorm.Model
+	ProdID int
+	Fname  string
+	Fsize  string
+	Ftype  string
+	Path   string
 }
 
 type prodTags []string

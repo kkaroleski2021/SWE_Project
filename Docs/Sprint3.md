@@ -5,20 +5,54 @@
 ## Contents
 - [Work Completed](#work-completed)
 - [Front-End](#front-end)  
-    - [Unit tests](#unit-tests)
-    - [New Unit Tests](#new-unit-tests)
-    - [Cypress tests](#cypress-tests)
+	- [New Unit Tests](#new-unit-tests)
+    - [Unit tests](#unit-tests) 
     - [New Cypress Tests](#new-cypress-tests)
+	- [Cypress tests](#cypress-tests)
 - [Back-End](#back-end) 
-    - [Unit tests](#unit-tests-1)
     - [New Unit Tests](#new-unit-tests-1)
+	- [Unit tests](#unit-tests-1)
     - [API Documentation](#api-documentation)
 
 
 ## Work Completed
-- 
+- The ability to upload products to a product table in the database was added.
+- The product currently has several fields and it linked to the respective user by id (more on that below).  
+- Due to the complexity of JWT authentication, we have opted for a more simplistic cookie session method of authenticating users. This method supports url paths without the need for user id to be included. 
+	- When a user logs in or signs up, they will be given a cookie. This cookie tells the system that user id #x is logged in. 
+	- This cookie grants access to updating and deleting the user associated with that id. 
+	- It also allows user to upload products which will be saved with their respective id.
+-  The ability to upload multiple images for a product was implemented. 
+	- These images will be saved to a file in 
+	```/frontend/src/assets/uploads```. Several pieces of information will be stored including the filepath and the associated product ID in a table in the database.  
+- Further work on areas surrounding uploading and displaying product images will be handled in the future.
+- a login page and a sign up page was created 
+	- the login page takes a user's password and username as input 
+	- the sign up page takes in the user's first name, last name, email, and password
+- the login/signup page has been linked to the home page through different buttons
 
 ## Front-End  
+
+
+### New Unit Tests
+it('should render a button as a Link, checks for href attribute and primary class', () => {
+  render(<ButtonAsLink />)
+  const buttonAsLink = screen.getByRole('link', { name: /link/i })
+  expect(buttonAsLink).toHaveClass('primary')
+  expect(buttonAsLink).toHaveAttribute('href', '/')
+});
+
+it(`should have as title 'signup'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('signup');
+  });
+  
+  it(`should have as title 'login2'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('login2');
+  });
 
 ### Unit Tests
 - NOTE: Most of these are the default angular ones, but the one at the bottom used to see if the images rendered was homemade - not sure if it actually works though
@@ -69,9 +103,6 @@ describe('AppComponent', () => {
 });
 ```
 
-### New Unit Tests
-
-
 
 ### Cypress Tests
 ```
@@ -91,14 +122,19 @@ describe('My Second Test', () => {
 ```
 
 
-### New Cypress Tests
-
-
-
 
 
 
 ## Back-End
+
+
+
+### New Unit Tests
+
+
+
+
+
 ### Unit Tests
 ```
 func TestSearch(t *testing.T) {
@@ -249,27 +285,21 @@ func Test_Search(t *testing.T) {
 ```
 
 
-### New Unit Tests
-
-
-
-
-
-
 ### API Documentation
 
 #### Endpoints
-| Path             | HTTP   |
-|------------------|--------|
-| "/users"         | GET    |
-| "/users/{id}"    | GET    |
-| "/users/{id}"    | PUT    |
-| "/users/{id}"    | DELETE |
-| "/signup"        | POST   |
-| "/login"         | POST   |
-| "/search"        | GET    |
-| "/search"        | POST   |
-| "/searchhistory" | GET    |
+| Path             					| HTTP   |
+|-----------------------------------|--------|
+| "/users"         					| GET    |
+| "/users/{id}"    					| GET    |
+| "/users/updateprofile"    		| PUT    |
+| "/users/updateprofile/delete"   	| DELETE |
+| "/signup"        		| POST   |
+| "/login"        		| POST   |
+| "/newlisting"         | POST   |
+| "/search"        		| GET    |
+| "/search"        		| POST   |
+| "/searchhistory" 		| GET    |
 
 
 #### "/users" - GET 
@@ -312,9 +342,8 @@ Response Format:
 ```
 
 
-#### "/users/{id}" - PUT 
-This method updates the user by id.  
-Must have a JWT authorization token.  
+#### "/users/updateprofile" - PUT 
+This method updates the user by id which is stored in a cookie.  
 Request Format: anything that is intended to be changed.
 ```
 {
@@ -338,9 +367,9 @@ Response Format:
 ```
 
 
-#### "/users/{id}" - DELETE 
+#### "/users/updateprofile/delete" - DELETE 
 This method deletes the user by id.   
-Must have a JWT authorization token.  
+The id is stored and retrieved from a cookie. 
 Request Format: None   
 Response Format: 
 
@@ -399,6 +428,28 @@ Response Format:
     },
     "message": "success",
     "status": true
+}
+```
+
+#### "/newlisting" - POST 
+This method submits a new listing to the database. 
+It is stored in a separate table with the user id of the user that submitted the listing.
+Name and price are required fields.   
+
+Request Format: 
+```
+{
+    "name":"desk",
+    "tags":"furniture",
+    "price":"15"
+}
+```
+Response Format:
+```
+{
+    "name":"desk",
+    "tags":"furniture",
+    "price":"15"
 }
 ```
 
