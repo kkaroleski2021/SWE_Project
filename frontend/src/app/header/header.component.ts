@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-header',
   template: `
@@ -12,10 +13,13 @@ import { Component } from '@angular/core';
       </a>
     </div>
 
-    <div class="container content has-text-centered">
+
+    
+  <div class="container content has-text-centered">
        <p> WELCOME TO SWAMPY SELLS </p>
     </div>
   </div>
+
 
 
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
@@ -240,16 +244,28 @@ import { Component } from '@angular/core';
   </ul>
 </nav>
 
-  `,
+<div class="buttons is-link is-left">
+<button is-link onclick="document.location='//localhost:62925/'">Log In</button>
+</div>
+
+`,
   styles: [`
     .container{
       font-family: "cool";
       font-size: 45px;
-      align-items: center;
+      
   }
+  .buttons {
+  border: none;
+  color: blue;
+  padding: 10px 12px;
+  text-align: left;
+  text-decoration: none;
+  display: left;
+  font-size: 16px;
+}
 
   `]
-  
 
 })
 export class HeaderComponent {
