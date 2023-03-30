@@ -1,5 +1,11 @@
 # SellerPage
 
+This is the page that appears when the user wants to sell an item
+Still a SERIOUS work in progress
+Things to add still
+- Fix the formatting (looks quite ugly rn)
+- Figure out the file upload stuff + user input stuff
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
 
 ## Development server
