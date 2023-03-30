@@ -26,7 +26,10 @@
 	- These images will be saved to a file in 
 	```/frontend/src/assets/uploads```. Several pieces of information will be stored including the filepath and the associated product ID in a table in the database.  
 - Further work on areas surrounding uploading and displaying product images will be handled in the future.
-- 
+- a login page and a sign up page was created 
+	- the login page takes a user's password and username as input 
+	- the sign up page takes in the user's first name, last name, email, and password
+- the login/signup page has been linked to the home page through different buttons
 
 ## Front-End  
 
