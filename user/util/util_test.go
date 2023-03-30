@@ -124,24 +124,69 @@ func Test_GetUser(t *testing.T) {
 	var User user.User
 	request, _ := http.NewRequest("GET", "/users/{id}", nil)
 	if request != nil {
-		fmt.Println("we are in here")
 		fmt.Println(User.ID)
 	}
 	response := httptest.NewRecorder()
-	//handler := http.HandlerFunc(user.GetUser)
-	//fmt.Println("Response: ", response)
-	//fmt.Println("response code: ", response.Code)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
+	fmt.Println(User.ID)
 }
 
 func Test_GetUsers(t *testing.T) {
-	request, err := http.NewRequest("GET", "/users", nil)
-
-	//request.Header.Set("Content-Type", "application/json")
+	r := Router()
+	r.Get("/users", user.GetUsers)
+	req, err := http.NewRequest("GET", "/users", nil)
 	if err != nil {
-		fmt.Println("we are in here")
+		fmt.Println("Help!")
 		t.Fatal(err)
 	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(user.GetUsers)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	expected := `[
+		{
+			"ID": 14,
+			"CreatedAt": "2023-03-01T22:29:31.286Z",
+			"UpdatedAt": "2023-03-01T22:29:31.286Z",
+			"DeletedAt": null,
+			"firstname": "natasha",
+			"lastname": "sthilaire",
+			"email": "mileyan25@gmail.com",
+			"password": "$2a$10$JJ7gDSb9vN7UiwBRdRZK0OzESazKN.R758b.Je1KkfB2qrQnOYmrm"
+		},
+		{
+			"ID": 17,
+			"CreatedAt": "2023-03-02T02:22:33.383Z",
+			"UpdatedAt": "2023-03-02T02:27:34.779Z",
+			"DeletedAt": null,
+			"firstname": "first1",
+			"lastname": "last",
+			"email": "email1@email",
+			"password": "$2a$10$ADd6OUj5h3Y19MfD5HJYkuaYEYCiCOhOB8nDTuWqPHuVtBs.B9soS"
+		},
+		{
+			"ID": 19,
+			"CreatedAt": "2023-03-28T14:55:24.478Z",
+			"UpdatedAt": "2023-03-28T14:55:24.478Z",
+			"DeletedAt": null,
+			"firstname": "Adding",
+			"lastname": "Product",
+			"email": "prod@email",
+			"password": "$2a$10$.upfnBlQkLAONTEz.I9ITuRoCbpy4yoJ0OLsMrjTdVJVTYVfZuQDC"
+		}
+	]`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+
+	fmt.Println(rr.Body.String())
+	/*request.Header.Set("Content-Type", "application/json")
+
 
 	defer request.Body.Close()
 	response := httptest.NewRecorder()
@@ -153,7 +198,7 @@ func Test_GetUsers(t *testing.T) {
 			status, http.StatusOK)
 	}
 	fmt.Println("Response: ", response)
-	fmt.Println("response code: ", response.Code)
+	fmt.Println("response code: ", response.Code)*/
 
 }
 
@@ -184,7 +229,7 @@ func Test_DeleteUser(t *testing.T) {
 
 func Test_LogIn(t *testing.T) {
 	data := url.Values{}
-	data.Set("login", "User")
+	data.Set("logIn", "User")
 	request, _ := http.NewRequest("POST", "/login", strings.NewReader(data.Encode()))
 	response := httptest.NewRecorder()
 	Router().ServeHTTP(response, request)

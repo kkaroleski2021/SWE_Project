@@ -1,13 +1,11 @@
-test_name: "Non existing user"
+test_name: "Test GetUsers"
 
 stages:
 
-- name: "GetUsers"
+- name: "Test GetUsers"
   request:
-    url: "http://localhost:9000/users/1"
-    method: POST
+    url: "http://localhost:9000/users"
+    method: PUT
   response:
     status_code: 405
-    save: 
-      $ext:
-        function:  tavern_utils:save_response
+   # body: 

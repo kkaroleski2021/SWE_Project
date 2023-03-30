@@ -1,10 +1,10 @@
-#import datetime
+
 
 test_name: "Integration test with Tavern"
 
 stages:
 
-- name: "GetUsers"
+- name: "Test GetUser"
   request:
     url: "http://localhost:9000/users/14"
     method: GET
