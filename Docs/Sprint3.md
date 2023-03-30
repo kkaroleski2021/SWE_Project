@@ -270,17 +270,18 @@ func Test_Search(t *testing.T) {
 ### API Documentation
 
 #### Endpoints
-| Path             | HTTP   |
-|------------------|--------|
-| "/users"         | GET    |
-| "/users/{id}"    | GET    |
-| "/users/{id}"    | PUT    |
-| "/users/{id}"    | DELETE |
-| "/signup"        | POST   |
-| "/login"         | POST   |
-| "/search"        | GET    |
-| "/search"        | POST   |
-| "/searchhistory" | GET    |
+| Path             					| HTTP   |
+|-----------------------------------|--------|
+| "/users"         					| GET    |
+| "/users/{id}"    					| GET    |
+| "/users/updateprofile"    		| PUT    |
+| "/users/updateprofile/delete"   	| DELETE |
+| "/signup"        		| POST   |
+| "/login"        		| POST   |
+| "/newlisting"         | POST   |
+| "/search"        		| GET    |
+| "/search"        		| POST   |
+| "/searchhistory" 		| GET    |
 
 
 #### "/users" - GET 
@@ -323,9 +324,8 @@ Response Format:
 ```
 
 
-#### "/users/{id}" - PUT 
-This method updates the user by id.  
-Must have a JWT authorization token.  
+#### "/users/updateprofile" - PUT 
+This method updates the user by id which is stored in a cookie.  
 Request Format: anything that is intended to be changed.
 ```
 {
@@ -349,9 +349,9 @@ Response Format:
 ```
 
 
-#### "/users/{id}" - DELETE 
+#### "/users/updateprofile/delete" - DELETE 
 This method deletes the user by id.   
-Must have a JWT authorization token.  
+The id is stored and retrieved from a cookie. 
 Request Format: None   
 Response Format: 
 
@@ -410,6 +410,28 @@ Response Format:
     },
     "message": "success",
     "status": true
+}
+```
+
+#### "/newlisting" - POST 
+This method submits a new listing to the database. 
+It is stored in a separate table with the user id of the user that submitted the listing.
+Name and price are required fields.   
+
+Request Format: 
+```
+{
+    "name":"desk",
+    "tags":"furniture",
+    "price":"15"
+}
+```
+Response Format:
+```
+{
+    "name":"desk",
+    "tags":"furniture",
+    "price":"15"
 }
 ```
 
