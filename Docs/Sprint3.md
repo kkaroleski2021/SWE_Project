@@ -35,7 +35,24 @@
 
 
 ### New Unit Tests
+it('should render a button as a Link, checks for href attribute and primary class', () => {
+  render(<ButtonAsLink />)
+  const buttonAsLink = screen.getByRole('link', { name: /link/i })
+  expect(buttonAsLink).toHaveClass('primary')
+  expect(buttonAsLink).toHaveAttribute('href', '/')
+});
 
+it(`should have as title 'signup'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('signup');
+  });
+  
+  it(`should have as title 'login2'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('login2');
+  });
 
 ### Unit Tests
 - NOTE: Most of these are the default angular ones, but the one at the bottom used to see if the images rendered was homemade - not sure if it actually works though
@@ -85,8 +102,6 @@ describe('AppComponent', () => {
 });
 });
 ```
-
-### New Cypress Tests
 
 
 ### Cypress Tests
