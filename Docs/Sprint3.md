@@ -314,12 +314,13 @@ func Test_Search(t *testing.T) {
 | "/users/{id}"    					| GET    |
 | "/users/updateprofile"    		| PUT    |
 | "/users/updateprofile/delete"   	| DELETE |
-| "/signup"        		| POST   |
-| "/login"        		| POST   |
-| "/newlisting"         | POST   |
-| "/search"        		| GET    |
-| "/search"        		| POST   |
-| "/searchhistory" 		| GET    |
+| "/signup"        					| POST   |
+| "/login"        					| POST   |
+| "/newlisting"         			| POST   |
+| "/newlisting/addimages"         	| POST   |
+| "/search"        					| GET    |
+| "/search"        					| POST   |
+| "/searchhistory" 					| GET    |
 
 
 #### "/users" - GET 
@@ -459,19 +460,54 @@ Name and price are required fields.
 Request Format: 
 ```
 {
-    "name":"desk",
+    "name":"chair",
     "tags":"furniture",
-    "price":"15"
+    "price":"12"
 }
 ```
 Response Format:
 ```
 {
-    "name":"desk",
-    "tags":"furniture",
-    "price":"15"
+    "ID": 21,
+    "CreatedAt": "2023-03-29T21:34:33.391-04:00",
+    "UpdatedAt": "2023-03-29T21:34:33.391-04:00",
+    "DeletedAt": null,
+    "UserId": 19,
+    "name": "chair",
+    "tags": "furniture",
+    "price": 12
 }
 ```
+
+#### "/newlisting/addimages" - POST 
+This method submits adds images to the database corresponding with a product. 
+It is stored in a separate table with the product id that the images belong to.
+The content type is of form-data and the key is "file".
+
+Request Format: 
+```
+{
+    key = file 
+	value = uploadedimg.jpg
+}
+```
+Response Format:
+```
+{
+    "ID": 2,
+    "CreatedAt": "2023-03-29T21:35:39.413-04:00",
+    "UpdatedAt": "2023-03-29T21:35:39.413-04:00",
+    "DeletedAt": null,
+    "ProdID": 19,
+    "Fname": "Untitled.jpg",
+    "Fsize": "",
+    "Ftype": "",
+    "Path": "./frontend/src/assets/uploadsUntitled.jpg"
+}
+```
+
+
+
 
 
 #### "/search" - GET 

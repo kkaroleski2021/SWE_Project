@@ -86,7 +86,7 @@ var AngularHandler = &httputil.ReverseProxy{Director: director}
 
 func httpHandler() {
 	r := mux.NewRouter()
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("frontend/src/app")))
+	//r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/src/app")))
 
 	//User api
 	r.HandleFunc("/users", user.GetUsers).Methods("GET")
@@ -98,6 +98,7 @@ func httpHandler() {
 
 	//Product api
 	r.HandleFunc("/newlisting", user.ValidateToken(product.AddProduct)).Methods("POST")
+	r.HandleFunc("/newlisting/addimages", user.ValidateToken(product.UploadImg)).Methods("POST")
 
 	// Search api
 	r.HandleFunc("/search", router.Search).Methods("GET")
