@@ -72,8 +72,8 @@ func Router() *mux.Router {
 	r.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
 	r.HandleFunc("/users/{id}", user.GetUser).Methods("GET")
 	r.HandleFunc("/signup", user.CreateUser).Methods("POST")
-	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.UpdateUser)).Methods("PUT")
-	r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.DeleteUser)).Methods("DELETE")
+	//r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.UpdateUser)).Methods("PUT")
+	//r.HandleFunc("/users/{id}", user.ValidateMiddleware(user.DeleteUser)).Methods("DELETE")
 	r.HandleFunc("/login", user.LogIn).Methods("POST")
 	r.HandleFunc("/search", router.Search).Methods("GET")
 	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
@@ -132,8 +132,7 @@ func Test_GetUser(t *testing.T) {
 }
 
 func Test_GetUsers(t *testing.T) {
-	r := Router()
-	r.Get("/users", user.GetUsers)
+
 	req, err := http.NewRequest("GET", "/users", nil)
 	if err != nil {
 		fmt.Println("Help!")

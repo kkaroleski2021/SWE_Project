@@ -130,7 +130,29 @@ describe('My Second Test', () => {
 
 
 ### New Unit Tests
+Tavern tests:
 
+test_name: "Integration test with Tavern"
+
+stages:
+
+- name: "Test GetUser"
+  request:
+    url: "http://localhost:9000/users/14"
+    method: GET
+  response:
+    status_code: 200
+
+test_name: "Test GetUsers"
+
+stages:
+
+- name: "Test GetUsers"
+  request:
+    url: "http://localhost:9000/users"
+    method: GET
+  response:
+    status_code: 200
 
 
 

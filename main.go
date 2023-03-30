@@ -1,16 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"go/product"
 	"go/router"
 	"go/user"
 	"log"
 	"net/http"
-
 	"net/http/httputil"
 	"net/url"
 
+	"github.com/TutorialEdge/realtime-chat-go-react/pkg/websocket"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
 
 // make sure to enter user and pw after a pull.
@@ -23,6 +25,54 @@ func getOrigin() *url.URL {
 }
 
 var origin = getOrigin()
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin:     func(r *http.Request) bool { return true },
+}
+
+func reader(conn *websocket.Conn) {
+	for {
+		// read in a message
+		messageType, p, err := conn.ReadMessage()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		// print out that message for clarity
+		fmt.Println(string(p))
+
+		if err := conn.WriteMessage(messageType, p); err != nil {
+			log.Println(err)
+			return
+		}
+
+	}
+}
+
+/*func setupRoutes() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {})
+	http.HandleFunc("/ws", serveWs)
+}*/
+
+func serveWs(w http.ResponseWriter, r *http.Request) {
+	ws, err := websocket.Upgrade(w, r)
+	if err != nil {
+		fmt.Fprintf(w, "%+V\n", err)
+	}
+	go websocket.Writer(ws)
+	websocket.Reader(ws)
+}
+
+func setupRoutes() {
+	pool := websocket.NewPool()
+	go pool.Start()
+
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(pool, w, r)
+	})
+}
 
 var director = func(req *http.Request) {
 	req.Header.Add("X-Forwarded-Host", req.Host)
@@ -54,12 +104,15 @@ func httpHandler() {
 	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
 	r.HandleFunc("/search", router.SearchPost).Methods("POST")
 
+	//chat
+
 	r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":9000", r))
 }
 
 func main() {
+	setupRoutes()
 	user.InitialMigration(DNS)
 	product.InitialMigration(DNS)
 	httpHandler()

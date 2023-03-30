@@ -5,7 +5,6 @@ stages:
 - name: "Test GetUsers"
   request:
     url: "http://localhost:9000/users"
-    method: PUT
+    method: GET
   response:
-    status_code: 405
-   # body: 
+    status_code: 200
