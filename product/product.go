@@ -1,11 +1,16 @@
 package product
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+
+	//"io/ioutil"
+	//"strconv"
+
+	"io"
 	"net/http"
-	"strconv"
+	"os"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -14,7 +19,7 @@ import (
 type ProdInterface interface {
 	InitialMigration(DNS string)
 	AddProduct(w http.ResponseWriter, r *http.Request)
-	UploadImg(w http.ResponseWriter, r *http.Request, prodID int)
+	UploadImg(w http.ResponseWriter, r *http.Request)
 	//UploadImg(image io.Reader, token string)
 }
 
@@ -40,6 +45,109 @@ func InitialMigration(DNS string) {
 	}
 }
 
+/* first implementation of Add Product
+	images and text for product are in one form-data type ..
+	you have to select the entry by exact name "name","price", "tags" , "file" etc
+
+second implementation getting json info and getting the form data for images is diff..
+ could be used if we have a separate path for uploading images or something
+*/
+
+/*
+func AddProduct(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "multipart/form-data")
+
+	r.ParseMultipartForm(200000)
+	formdata := r.MultipartForm
+	name := formdata.File["name"]
+	for i := range name {
+		data, err := name[i].Open()
+		if err != nil {
+			json.NewEncoder(w).Encode("Error Retrieving Name")
+			fmt.Println(err)
+			return
+		}
+		defer data.Close()
+
+
+	}
+
+	mr, err := r.MultipartReader()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var product Product
+	var files []Upfile
+	var upfile Upfile
+	for {
+		part, err := mr.NextPart()
+
+		// This is OK, no more parts
+		if err == io.EOF {
+			break
+		}
+
+		// Some error
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		println(part.FormName())
+		println(part.Header.Get("name"))
+
+		// JSON 'text' part
+		if part.FormName() == "name" {
+			jsonDecoder := json.NewDecoder(part)
+			err = jsonDecoder.Decode(&product)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+
+		// img 'file' part
+		if part.FormName() == "file" {
+			upfile.Fname = part.FileName()
+
+			fmt.Println("URL:", part.FileName())
+			outfile, err := os.Create("./frontend/src/assets/uploads" + part.FileName())
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			upfile.Path = outfile.Name()
+			defer outfile.Close()
+
+			_, err = io.Copy(outfile, part)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			files = append(files, upfile)
+		}
+
+	}
+	result := DB.Create(&product)
+	if result.Error != nil {
+		fmt.Println(result.Error)
+	} else {
+		json.NewEncoder(w).Encode(product)
+	}
+
+	for i := 0; i < len(files); i++ {
+		files[i].ProdID = int(product.ID)
+		result := imgDB.Create(&files[i])
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		} else {
+			json.NewEncoder(w).Encode(files[i])
+		}
+	}
+} */
+
 func AddProduct(w http.ResponseWriter, r *http.Request) {
 	//var id = GetPathID(r)
 	w.Header().Set("Content-Type", "application/json")
@@ -51,12 +159,71 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 	if result.Error != nil {
 		fmt.Println(result.Error)
 	}
-	UploadImg(w, r, int(product.ID))
 	json.NewEncoder(w).Encode(product)
+	//UploadImg(w, r, int(product.ID))
+
+	//write the id to the request to pass along to next function
+	ctx := context.WithValue(r.Context(), "request_id", product.ID)
+	http.Redirect(w, r.WithContext((ctx)), "/newlisting/addimages", http.StatusSeeOther)
 }
 
-func UploadImg(w http.ResponseWriter, r *http.Request, prodID int) {
-	w.Header().Set("Content-Type", "application/json")
+func UploadImg(w http.ResponseWriter, r *http.Request) {
+	mr, err := r.MultipartReader()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var files []Upfile
+	var upfile Upfile
+	for {
+		part, err := mr.NextPart()
+		// This is OK, no more parts
+		if err == io.EOF {
+			break
+		}
+		// Some error
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// img 'file' part
+		if part.FormName() == "file" {
+			upfile.Fname = part.FileName()
+			outfile, err := os.Create("./frontend/src/assets/uploads/" + part.FileName())
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			upfile.Path = outfile.Name()
+			defer outfile.Close()
+
+			_, err = io.Copy(outfile, part)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			files = append(files, upfile)
+		}
+
+	}
+	prodID := r.Context().Value("request_id").(int)
+	for i := 0; i < len(files); i++ {
+		files[i].ProdID = int(prodID)
+		result := imgDB.Create(&files[i])
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		} else {
+			json.NewEncoder(w).Encode(files[i])
+		}
+	}
+}
+
+//doesnt work ?
+/* func UploadImg(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "multipart/form-data")
+	prodID := r.Context().Value("request_id").(int)
 	//max upload of 10 MB files
 	r.ParseMultipartForm(200000)
 	formdata := r.MultipartForm
@@ -76,6 +243,7 @@ func UploadImg(w http.ResponseWriter, r *http.Request, prodID int) {
 			Fname:  fileHeaders[i].Filename,
 			Fsize:  strconv.FormatInt(int64(fileHeaders[i].Size), 10),
 		}
+		println(fileHeaders[i].Filename)
 		upfile.Ftype = fileHeaders[i].Header.Get("Content-type")
 
 		//Create file
@@ -97,9 +265,11 @@ func UploadImg(w http.ResponseWriter, r *http.Request, prodID int) {
 		result := imgDB.Create(&upfile)
 		if result.Error != nil {
 			fmt.Println(result.Error)
+		} else {
+			json.NewEncoder(w).Encode(tempFile)
 		}
 		//http.Redirect(w, r, "/", 301)
 	}
 
 	json.NewEncoder(w).Encode("File Uploaded Successfully")
-}
+} */

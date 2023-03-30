@@ -15,7 +15,7 @@ import (
 
 // make sure to enter user and pw after a pull.
 // ----------delete user/pw before pushing to github
-const DNS = "user:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+const DNS = "admin:PwiVt3ILV3IGwoLXVqbS@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
 func getOrigin() *url.URL {
 	origin, _ := url.Parse("http://localhost:4200")
@@ -36,7 +36,7 @@ var AngularHandler = &httputil.ReverseProxy{Director: director}
 
 func httpHandler() {
 	r := mux.NewRouter()
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("frontend/src/app")))
+	//r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/src/app")))
 
 	//User api
 	r.HandleFunc("/users", user.GetUsers).Methods("GET")
@@ -48,6 +48,7 @@ func httpHandler() {
 
 	//Product api
 	r.HandleFunc("/newlisting", user.ValidateToken(product.AddProduct)).Methods("POST")
+	r.HandleFunc("/newlisting/addimages", user.ValidateToken(product.UploadImg)).Methods("POST")
 
 	// Search api
 	r.HandleFunc("/search", router.Search).Methods("GET")
