@@ -118,5 +118,6 @@ func main() {
 	//setupRoutes()
 	user.InitialMigration(DNS)
 	product.InitialMigration(DNS)
+	product.OrderedProductsMigration(DNS)
 	httpHandler()
 }
