@@ -32,6 +32,7 @@ type ProdInterface interface {
 // get db obj that was created in user package
 var DB *gorm.DB
 var imgDB *gorm.DB
+var orderedProductsDB *gorm.DB
 var err error
 
 func InitialMigration(DNS string) {
@@ -48,6 +49,23 @@ func InitialMigration(DNS string) {
 		panic("Cannot connect to DB")
 	} else {
 		imgDB.AutoMigrate(&Upfile{})
+	}
+}
+
+func OrderedProductsMigration(DNS string) {
+	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("Cannot connect to DB")
+	} else {
+		DB.AutoMigrate(&OrderedProduct{})
+	}
+	orderedProductsDB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("Cannot connect to DB")
+	} else {
+		imgDB.AutoMigrate(&OrderedProduct{})
 	}
 }
 

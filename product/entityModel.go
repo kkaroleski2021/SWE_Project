@@ -32,6 +32,7 @@ type Upfile struct {
 }
 
 type OrderedProduct struct {
+	gorm.Model
 	ID              string
 	ProductId       string
 	ProductQuantity int
