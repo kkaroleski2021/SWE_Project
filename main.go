@@ -105,6 +105,8 @@ func httpHandler() {
 	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
 	r.HandleFunc("/search", router.SearchPost).Methods("POST")
 
+	//order a product
+
 	//chat
 
 	r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
