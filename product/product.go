@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
+	"sync"
+	"time"
 
 	//"io/ioutil"
 	//"strconv"
@@ -15,6 +18,9 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+var rand uint32
+var randmu sync.Mutex
 
 type ProdInterface interface {
 	InitialMigration(DNS string)
@@ -190,12 +196,13 @@ func UploadImg(w http.ResponseWriter, r *http.Request) {
 
 		// img 'file' part
 		if part.FormName() == "file" {
-			upfile.Fname = part.FileName()
-			outfile, err := os.Create("./frontend/src/assets/uploads/" + part.FileName())
+			upfile.Fname = randomName(part.FileName())
+			outfile, err := os.Create("./frontend/src/assets/uploads/" + upfile.Fname)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+
 			upfile.Path = outfile.Name()
 			defer outfile.Close()
 
@@ -218,6 +225,44 @@ func UploadImg(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(files[i])
 		}
 	}
+}
+
+func reseed() uint32 {
+	return uint32(time.Now().UnixNano() + int64(os.Getpid()))
+}
+
+func nextSuffix() string {
+	randmu.Lock()
+	r := rand
+	if r == 0 {
+		r = reseed()
+	}
+	r = r*1664525 + 1013904223 // constants from Numerical Recipes
+	rand = r
+	randmu.Unlock()
+	return strconv.Itoa(int(1e9 + r%1e9))[1:]
+}
+
+func randomName(name string) string {
+	dir := "./frontend/src/assets/uploads/"
+	nconflict := 0
+	origName := name
+	for i := 0; i < 10000; i++ {
+		newName := nextSuffix() + origName
+		fullPath := dir + newName
+		f, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
+		if os.IsExist(err) {
+			if nconflict++; nconflict > 10 {
+				randmu.Lock()
+				rand = reseed()
+				randmu.Unlock()
+			}
+			continue
+		}
+		f.Close()
+		return newName
+	}
+	return randomName(name)
 }
 
 //doesnt work ?
