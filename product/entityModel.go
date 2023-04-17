@@ -31,6 +31,13 @@ type Upfile struct {
 	Path   string
 }
 
+type OrderedProduct struct {
+	ID              string
+	ProductId       string
+	ProductQuantity int
+	OrderId         string
+}
+
 type prodTags []string
 
 //planning to get the index of the tag from Tags and just storing the index in the db to save room ? maybe faster ? idk
