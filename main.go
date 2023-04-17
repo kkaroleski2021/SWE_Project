@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	"go/product"
 	"go/router"
 	"go/user"
@@ -10,14 +10,14 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/TutorialEdge/realtime-chat-go-react/pkg/websocket"
+	//"github.com/TutorialEdge/realtime-chat-go-react/pkg/websocket"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/websocket"
+	//"github.com/gorilla/websocket"
 )
 
 // make sure to enter user and pw after a pull.
 // ----------delete user/pw before pushing to github
-const DNS = "natasha:SwampySellsDB@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
+const DNS = "user:pw@tcp(swampy-sells.cnumdglbk4fk.us-east-1.rds.amazonaws.com:3306)/swe_db?charset=utf8&parseTime=true"
 
 func getOrigin() *url.URL {
 	origin, _ := url.Parse("http://localhost:4200")
@@ -26,53 +26,53 @@ func getOrigin() *url.URL {
 
 var origin = getOrigin()
 
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-	CheckOrigin:     func(r *http.Request) bool { return true },
-}
+// var upgrader = websocket.Upgrader{
+// 	ReadBufferSize:  1024,
+// 	WriteBufferSize: 1024,
+// 	CheckOrigin:     func(r *http.Request) bool { return true },
+// }
 
-func reader(conn *websocket.Conn) {
-	for {
-		// read in a message
-		messageType, p, err := conn.ReadMessage()
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		// print out that message for clarity
-		fmt.Println(string(p))
+// func reader(conn *websocket.Conn) {
+// 	for {
+// 		// read in a message
+// 		messageType, p, err := conn.ReadMessage()
+// 		if err != nil {
+// 			log.Println(err)
+// 			return
+// 		}
+// 		// print out that message for clarity
+// 		fmt.Println(string(p))
 
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-			return
-		}
+// 		if err := conn.WriteMessage(messageType, p); err != nil {
+// 			log.Println(err)
+// 			return
+// 		}
 
-	}
-}
+// 	}
+// }
 
 /*func setupRoutes() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {})
 	http.HandleFunc("/ws", serveWs)
 }*/
 
-func serveWs(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r)
-	if err != nil {
-		fmt.Fprintf(w, "%+V\n", err)
-	}
-	go websocket.Writer(ws)
-	websocket.Reader(ws)
-}
+// func serveWs(w http.ResponseWriter, r *http.Request) {
+// 	ws, err := websocket.Upgrade(w, r)
+// 	if err != nil {
+// 		fmt.Fprintf(w, "%+V\n", err)
+// 	}
+// 	go websocket.Writer(ws)
+// 	websocket.Reader(ws)
+// }
 
-func setupRoutes() {
-	pool := websocket.NewPool()
-	go pool.Start()
+// func setupRoutes() {
+// 	pool := websocket.NewPool()
+// 	go pool.Start()
 
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(pool, w, r)
-	})
-}
+// 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+// 		serveWs(pool, w, r)
+// 	})
+// }
 
 var director = func(req *http.Request) {
 	req.Header.Add("X-Forwarded-Host", req.Host)
@@ -113,7 +113,7 @@ func httpHandler() {
 }
 
 func main() {
-	setupRoutes()
+	//setupRoutes()
 	user.InitialMigration(DNS)
 	product.InitialMigration(DNS)
 	httpHandler()

@@ -6,12 +6,20 @@ import (
 
 //this file will contain the 'entity' (product) model --> related structs, arrays, etc to be used in product package
 
+// json names according to angular ids
 type Product struct {
 	gorm.Model
-	UserId int
-	Name   string `json:"name" validate:"required"`
-	Tags   string `json:"tags"`
-	Price  int    `json:"price" validate:"required"`
+	UserId       int
+	UserPhoneNum string `json:"phoneNumber"`
+	Street       string `json:"aStreet"`
+	City         string `json:"aCity"`
+	State        string `json:"aState"`
+	Zip          string `json:"aZipcode"`
+	Name         string `json:"pName" validate:"required"`
+	Description  string `json:"pDescription"`
+	Condition    string `json:"pCondition"`
+	Tags         string `json:"pTags"`
+	Price        int    `json:"price" validate:"required"`
 }
 
 type Upfile struct {
