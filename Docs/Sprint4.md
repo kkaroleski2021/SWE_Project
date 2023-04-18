@@ -16,7 +16,7 @@
 
 
 ## Work Completed
-- 
+- When uploading an image, the backend code now accounts for files with the same names. File names are now given a randomized prefix and are checked against existing files. The extended name if now the official Fname and path of the path in the upFile table in the database rather than the original file name. 
 
 ## Front-End  
 
