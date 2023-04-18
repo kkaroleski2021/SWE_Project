@@ -39,6 +39,17 @@ type OrderedProduct struct {
 	OrderId         string
 }
 
+type Order struct {
+	gorm.Model
+	ID       string    `json:"id"`
+	Name     string    `json:"name"`
+	Address  string    `json:"address"`
+	Phone    string    `json:"phone"`
+	Products []Product `json:"products"`
+	Price    float64   `json:"price"`
+	Status   string    `json:"status"`
+}
+
 type prodTags []string
 
 //planning to get the index of the tag from Tags and just storing the index in the db to save room ? maybe faster ? idk
