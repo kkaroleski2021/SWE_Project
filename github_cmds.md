@@ -60,7 +60,7 @@ cd <the new folder>
 cd frontend
 npm install 
 ng serve
-
+```
 you can open your browser to localhost:9000. 
 localhost:4200 is just angular. 9000 is go and angular.
 
