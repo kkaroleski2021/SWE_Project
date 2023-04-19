@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	//"go/service"
 	"strconv"
 	"sync"
 	"time"
@@ -190,6 +192,22 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), "request_id", product.ID)
 	http.Redirect(w, r.WithContext((ctx)), "/newlisting/addimages", http.StatusSeeOther)
 }
+
+// For orders
+func AddOrder(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	//var Order order
+	//var order Order
+	//decoder := json.NewDecoder(r.Body).Decode(&order)
+	//err := decoder.Decode(&order)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	//orderID, err := AddOrder()
+
+}
+
+//adding order to the database
 
 func UploadImg(w http.ResponseWriter, r *http.Request) {
 	mr, err := r.MultipartReader()
