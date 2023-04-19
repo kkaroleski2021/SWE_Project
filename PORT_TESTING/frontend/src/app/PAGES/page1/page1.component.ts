@@ -12,12 +12,16 @@ export class Page1Component implements OnInit{
   public msg: any
   constructor( private http: HttpClient ) { }
   public ngOnInit(): void {
-    this.getMessage()
+    this.getMessage().subscribe(res=>{
+      if(res){ 
+        console.log("response")
+      }
+      console.log(res)
+      this.msg = res;
+    })
   }
-
   getMessage(){
-    let temp = JSON.parse(JSON.stringify(this.http.get('/page1')))
-    console.log(temp)
+    return this.http.get("http://localhost:9000/page1");
   }
 }
 
