@@ -544,5 +544,4 @@ Response Format:
 [{"Search":"pc"},{"Search":"books"}]
 ```
 
-### "/chat" 
-This function will serve as a means for users to communicate with other users about potential items that they will look to sell or look into. This feature involves implementing a basic WebSocket server which will listen for messages and write them back to via the same WebSocket. 
+
