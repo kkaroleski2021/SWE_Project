@@ -17,6 +17,9 @@
 
 ## Work Completed
 - When uploading an image, the backend code now accounts for files with the same names. File names are now given a randomized prefix and are checked against existing files. The extended name if now the official Fname and path of the path in the upFile table in the database rather than the original file name. 
+- Created a client profile in the database so that clients can access the database under certain permissions.
+- A testing program was created in order to work on routing and information retrieval from the GO API on a smaller scale.
+- 
 
 ## Front-End  
 
