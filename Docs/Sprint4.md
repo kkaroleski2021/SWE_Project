@@ -439,13 +439,6 @@ Request Format:
 Response Format:
 ```
 "The user has been successfully logged in"
-{
-    "data": {
-        "access-token": "eyJhbG....."
-    },
-    "message": "success",
-    "status": true
-}
 ```
 
 #### "/newlisting" - POST 
@@ -497,7 +490,7 @@ The content type is of form-data and the key is "file".
 Request Format: 
 ```
 {
-    key = file 
+  key = file 
 	value = uploadedimg.jpg
 }
 ```
