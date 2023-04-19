@@ -11,14 +11,14 @@ type Product struct {
 	gorm.Model
 	UserId       int
 	UserPhoneNum string `json:"phoneNumber"`
-	Street       string `json:"aStreet"`
-	City         string `json:"aCity"`
-	State        string `json:"aState"`
-	Zip          string `json:"aZipcode"`
-	Name         string `json:"pName" validate:"required"`
-	Description  string `json:"pDescription"`
-	Condition    string `json:"pCondition"`
-	Tags         string `json:"pTags"`
+	Street       string `json:"street"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Zip          string `json:"zip"`
+	Name         string `json:"name" validate:"required"`
+	Description  string `json:"descrip"`
+	Condition    string `json:"condition"`
+	Tags         string `json:"tags"`
 	Price        int    `json:"price" validate:"required"`
 }
 

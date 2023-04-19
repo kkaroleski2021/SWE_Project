@@ -16,7 +16,11 @@
 
 
 ## Work Completed
-- 
+- When uploading an image, the backend code now accounts for files with the same names. File names are now given a randomized prefix and are checked against existing files. The extended name is now the official Fname and part of the path in the upFile table in the database rather than the original file name. 
+- Created a client profile in the database so that clients can access the database under certain permissions.
+- A testing program was created in order to work on routing and information retrieval from the GO API on a smaller scale.
+- The json fields for adding a new listing have been extended in the backend to allow for more information to be stored. And the backend API has been adjusted accordingly.
+- CORS headers were added to ensure frontend is able to receive information from the API.
 
 ## Front-End  
 
@@ -452,22 +456,36 @@ Name and price are required fields.
 Request Format: 
 ```
 {
-    "name":"chair",
+    "phoneNumber":"1234567890",
+    "street":"",
+    "city":"gainesville",
+    "state":"Florida",
+    "zip":"32611",
+    "name":"sink",
+    "descrip":"a great sink",
+    "condition":"good",
     "tags":"furniture",
-    "price":"12"
+    "price":30
 }
 ```
 Response Format:
 ```
 {
-    "ID": 21,
-    "CreatedAt": "2023-03-29T21:34:33.391-04:00",
-    "UpdatedAt": "2023-03-29T21:34:33.391-04:00",
+    "ID": 26,
+    "CreatedAt": "2023-04-19T14:30:17.47-04:00",
+    "UpdatedAt": "2023-04-19T14:30:17.47-04:00",
     "DeletedAt": null,
     "UserId": 19,
-    "name": "chair",
+    "phoneNumber": "1234567890",
+    "street": "",
+    "city": "gainesville",
+    "state": "Florida",
+    "zip": "32611",
+    "name": "sink",
+    "descrip": "a great sink",
+    "condition": "good",
     "tags": "furniture",
-    "price": 12
+    "price": 30
 }
 ```
 
