@@ -196,15 +196,16 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 // For orders
 func AddOrder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	//var Order order
+	var Order Order
 	//var order Order
-	//decoder := json.NewDecoder(r.Body).Decode(&order)
-	//err := decoder.Decode(&order)
-	if err != nil {
+	json.NewDecoder(r.Body).Decode(&Order)
+	//err := decoder.Decode(&Order)
+	result := orderedProductsDB.Create(&Order)
+	if result.Error != nil {
 		fmt.Println(err.Error())
 	}
-	//orderID, err := AddOrder()
-
+	json.NewEncoder(w).Encode(Order)
+	fmt.Println("Order successfully created")
 }
 
 //adding order to the database

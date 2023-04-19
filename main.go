@@ -108,7 +108,7 @@ func httpHandler() {
 	r.HandleFunc("/search", router.SearchPost).Methods("POST")
 
 	//Order api
-	//r. HandleFunc("/order", ).Methods("PUT")
+	r.HandleFunc("/order", product.AddOrder).Methods("PUT")
 
 	r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 

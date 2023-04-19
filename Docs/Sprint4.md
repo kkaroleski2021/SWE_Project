@@ -316,6 +316,7 @@ stages:
 | "/newlisting/addimages"         	| POST   |
 | "/search"        					| GET    |
 | "/search"        					| POST   |
+| "/order"                  | POST   |
 | "/searchhistory" 					| GET    |
 
 
@@ -543,5 +544,6 @@ Response Format:
 ```
 [{"Search":"pc"},{"Search":"books"}]
 ```
-
+### "/order" - POST
+This method adds an order to the database for ordered products.
 
