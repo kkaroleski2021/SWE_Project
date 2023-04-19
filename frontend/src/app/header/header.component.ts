@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-header',
   template: `
-
     <div class="navbar is-white">
       <!-- logo -->
       <div class="navbar-brand">
@@ -13,19 +12,23 @@ import { Component } from '@angular/core';
       </a>
     </div>
 
-
+    <!-- MENU STUFF -->
+    <div class= "navbar-menu">
+    <div class= "navbar-end">
+      <a class= "navbar-item" routerLink=""> Home </a>
+      <a class= "navbar-item" routerLink="Login"> Login </a>
+      <a class= "navbar-item" routerLink="Signup"> Signup </a>
+      <a class= "navbar-item" routerLink="SellerPage"> I want to Sell! </a>
+    </div>
+    </div>
     
   <div class="container content has-text-centered">
        <p> WELCOME TO SWAMPY SELLS </p>
     </div>
   </div>
-
-
-
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
     <li>
-
     <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
@@ -49,10 +52,7 @@ import { Component } from '@angular/core';
     </div>
   </div>
 </div>
-
     </li>
-
-
     <li> <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
@@ -83,8 +83,6 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
-
     <li>
       <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
@@ -113,7 +111,6 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
     <li>
       <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
@@ -145,8 +142,6 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
-
     <li><div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
@@ -180,8 +175,6 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
-
     <li>
       <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
@@ -207,7 +200,6 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
 <li>
       <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
@@ -239,15 +231,11 @@ import { Component } from '@angular/core';
   </div>
 </div>
 </li>
-
-
   </ul>
 </nav>
-
 <div class="buttons is-link is-left">
 <button is-link onclick="document.location='//localhost:62925/'">Log In</button>
 </div>
-
 `,
   styles: [`
     .container{
@@ -264,7 +252,6 @@ import { Component } from '@angular/core';
   display: left;
   font-size: 16px;
 }
-
   `]
 
 })
