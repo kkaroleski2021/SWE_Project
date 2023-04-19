@@ -20,6 +20,7 @@
 - Created a client profile in the database so that clients can access the database under certain permissions.
 - A testing program was created in order to work on routing and information retrieval from the GO API on a smaller scale.
 - The json fields for adding a new listing have been extended in the backend to allow for more information to be stored. And the backend API has been adjusted accordingly.
+- CORS headers were added to ensure frontend is able to receive information from the API.
 
 ## Front-End  
 
