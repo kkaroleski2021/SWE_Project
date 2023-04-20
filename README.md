@@ -21,3 +21,4 @@ also be a map feature on the website so that students can locate nearby vendors.
 - download angular
 - to get the images on the website, add the images in assets into the my-angular-site folder
 - for frontend, download the files listed under frontend. All the main files will be located in src/app
+- use cd frontend, ng serve, and npm install to build
