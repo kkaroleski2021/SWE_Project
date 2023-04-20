@@ -16,7 +16,6 @@ import { Component } from '@angular/core';
     <div class= "navbar-menu">
     <div class= "navbar-end">
       <a class= "navbar-item" routerLink=""> Home </a>
-      <a class= "navbar-item" routerLink="Login"> Login </a>
       <a class= "navbar-item" routerLink="Signup"> Signup </a>
       <a class= "navbar-item" routerLink="SellerPage"> I want to Sell! </a>
     </div>
@@ -234,7 +233,12 @@ import { Component } from '@angular/core';
   </ul>
 </nav>
 <div class="buttons is-link is-left">
-<button is-link onclick="document.location='//localhost:62925/'">Log In</button>
+
+<nav>
+  <ul>
+  <li><button [routerLink]="['/Login']">Log In</button></li>
+  </ul>
+  </nav>
 </div>
 `,
   styles: [`
