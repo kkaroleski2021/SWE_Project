@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import { ProfilesComponent } from './profiles/profiles.component';
@@ -30,7 +32,11 @@ import { OrderFormComponent } from './order-form/order-form.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+    FormsModule,
+    RouterModule.forRoot([]),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
