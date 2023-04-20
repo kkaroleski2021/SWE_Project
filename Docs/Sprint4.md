@@ -23,6 +23,7 @@
 - CORS headers were added to ensure frontend is able to receive information from the API.
 - Routing on the frontend was changed from new local host tabs to components
 - Buttons were fixed and succesfully load to the desired pages
+- Created an order form for users looking to purchase an item
 
 ## Front-End  
 
