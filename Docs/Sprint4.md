@@ -21,6 +21,8 @@
 - A testing program was created in order to work on routing and information retrieval from the GO API on a smaller scale.
 - The json fields for adding a new listing have been extended in the backend to allow for more information to be stored. And the backend API has been adjusted accordingly.
 - CORS headers were added to ensure frontend is able to receive information from the API.
+- Routing on the frontend was changed from new local host tabs to components
+- Buttons were fixed and succesfully load to the desired pages
 
 ## Front-End  
 
