@@ -37,6 +37,13 @@ beforeEach(() => {
 
 })
 
+it('should render title', () => { //6
+    const fixture = TestBed.createComponent(Header2Component);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).contain('Log In to Swampy Sells!');
+  });
+
 
 
 ### Unit Tests
