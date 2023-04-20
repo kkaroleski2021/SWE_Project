@@ -12,6 +12,7 @@ import { ListingPageComponent } from './listing-page/listing-page.component';
 import { SellerPageComponent } from './seller-page/seller-page.component';
 import { BComponent} from './login/login.component';
 import { SComponent } from './signup/signup.component';
+import { OrderFormComponent } from './order-form/order-form.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SComponent } from './signup/signup.component';
     ListingPageComponent,
     SellerPageComponent,
     BComponent,
-    SComponent
+    SComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,

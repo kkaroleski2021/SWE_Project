@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <h1>Checkout</h1>
+    <form>
+
+        <!-- {{ userForm.value | json }} -->
+        
+        <div class="form-group">
+            <label>1. Shipping Address</label><br>
+            <label>Street Address: </label><input type="streetAddress" class="form-control" ngmodel> <br>
+            <label>City: </label><input type="city" class="form-control" ngmodel> <br>
+            <label>State: </label><input type="state" class="form-control" ngmodel>
+            <label>Zipcode: </label><input type="zipcode" class="form-control" ngmodel>
+        </div>
+        <br><br><br>
+
+        <div class="form-group">
+            <label>2. Payment Method</label><br>
+            <label>Card Number: </label><input type="16Digits" class="form-control" ngmodel>
+            <br>
+            <label>Expiration Date: </label><input type="expDate" class="form-control" ngmodel>
+            <label>CCV: </label><input type="CCV" class="form-control" ngmodel>
+        </div>
+        <br><br><br>
+
+        <div class="mb-3">
+            <label>3. Shipping</label><br>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="shipPreference" value="1to3" ngmodel>
+                <label class="form-check-label">1-3 Business Day Shipping (Express)</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="shipPreference" value="4to7" ngmodel>
+                <label class="form-check-label">4-7 Business Day Shipping (Standard)</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="shipPreference" value="7plus" ngmodel>
+                <label class="form-check-label">7+ Day Shipping (Free)</label>
+            </div>
+        </div> 
+        <br><br><br>
+
+        <div class="form-check mb-3">
+            <label>4. Alerts</label><br>
+            <input class="form-check-label" type="checkbox" ngmodel>
+            <label class="form-check-label">Send me more offers in my area</label>
+        </div>
+        <br><br><br>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+</div>

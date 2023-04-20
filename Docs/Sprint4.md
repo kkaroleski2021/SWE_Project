@@ -26,6 +26,16 @@
 
 
 ### New Unit Tests
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    imports: [
+        AppRoutingModule.withRoutes(
+        [{path: '', component: HomeComponent}, {path: 'Login', component: BComponent}, {path: 'signup', component: SComponent}]
+      )
+    ]
+  });
+
+})
 
 
 
