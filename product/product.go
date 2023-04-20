@@ -200,6 +200,7 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
 	//var order Order
 	json.NewDecoder(r.Body).Decode(&Order)
 	//err := decoder.Decode(&Order)
+	//adding order to the database
 	result := orderedProductsDB.Create(&Order)
 	if result.Error != nil {
 		fmt.Println(err.Error())
@@ -207,8 +208,6 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Order)
 	fmt.Println("Order successfully created")
 }
-
-//adding order to the database
 
 func UploadImg(w http.ResponseWriter, r *http.Request) {
 	mr, err := r.MultipartReader()

@@ -3,8 +3,10 @@
 package user
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"go/product"
 	"go/router"
 	"go/user"
 	"io"
@@ -244,4 +246,26 @@ func Test_Search(t *testing.T) {
 	Router().ServeHTTP(response, request)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
 	fmt.Println(response.Body)
+}
+
+// Tests for sprint 4
+func Test_OrderedProduct(t *testing.T) {
+	var jsonStr = []byte(`{"ID":4,"ProductID":"xyz","ProductQuantity":"pqr","OrderID":"123"}`)
+	req, err := http.NewRequest("POST", "/entry", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(product.AddOrder)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+	expected := `{"ID":4,"ProductID":"xyz","ProductQuantity":"pqr","OrderID":"123"}`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
 }
