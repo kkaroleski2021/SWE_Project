@@ -81,6 +81,14 @@ func Router() *mux.Router {
 	r.HandleFunc("/searchhistory", router.SearchHistory).Methods("GET")
 	r.HandleFunc("/search", router.SearchPost).Methods("POST")
 
+	r.HandleFunc("/users/updateprofile", user.ValidateToken(user.UpdateUser)).Methods("PUT")
+	r.HandleFunc("/users/updateprofile/delete", user.ValidateToken(user.DeleteUser)).Methods("DELETE")
+	//Product api
+	r.HandleFunc("/newlisting", user.ValidateToken(product.AddProduct)).Methods("POST")
+	r.HandleFunc("/newlisting/addimages", user.ValidateToken(product.UploadImg)).Methods("POST")
+	//Order api
+	r.HandleFunc("/order", product.AddOrder).Methods("PUT")
+
 	return r
 }
 func Test_SearchHistory(t *testing.T) {
@@ -250,8 +258,8 @@ func Test_Search(t *testing.T) {
 
 // Tests for sprint 4
 func Test_OrderedProduct(t *testing.T) {
-	var jsonStr = []byte(`{"ID":4,"ProductID":"xyz","ProductQuantity":"pqr","OrderID":"123"}`)
-	req, err := http.NewRequest("POST", "/entry", bytes.NewBuffer(jsonStr))
+	var jsonStr = []byte(`{"ID":4,"ProductID":"xyz","ProductQuantity":20,"OrderID":"123"}`)
+	req, err := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -263,7 +271,53 @@ func Test_OrderedProduct(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
-	expected := `{"ID":4,"ProductID":"xyz","ProductQuantity":"pqr","OrderID":"123"}`
+	expected := `{"ID":4,"ProductID":"xyz","ProductQuantity":20,"OrderID":"123"}`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+}
+
+func Test_AddProduct(t *testing.T) {
+	var jsonStr = []byte(`{"UserID":4,"UserPhoneNum":"5617277352","Street":"ABC","City":"WPB","State":"FL",
+	"Zip":"33409", "Name":"Headphones", "Description":"Sony", "Condition":"Gently Used", "Tags":"Trendy, Modern",
+	"Price": 250}`)
+	req, err := http.NewRequest("POST", "/newlisting", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(product.AddProduct)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+	expected := `{"UserID":4,"UserPhoneNum":"5617277352","Street":"ABC","City":"WPB","State":"FL",
+	"Zip":"33409", "Name":"Headphones", "Description":"Sony", "Condition":"Gently Used", "Tags":"Trendy, Modern",
+	"Price": 250}`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+}
+
+func Test_UploadImage(t *testing.T) {
+	var jsonStr = []byte(`{"ProdID":4,"FName":"A","Fsize":"150","Ftype":"PNG","Path":"C:/Users/Downloads"}`)
+	req, err := http.NewRequest("POST", "/newlisting/addimages", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(product.UploadImg)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+	expected := `{"ProdID":4,"FName":"A","Fsize":"150","Ftype":"PNG","Path":"C:/Users/Downloads"}`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
