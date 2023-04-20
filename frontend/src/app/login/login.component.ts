@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'c-component',
+  selector: 'b-component',
   template: `
     <form class="box">
   <div class="field">
@@ -10,30 +10,35 @@ import { Component } from '@angular/core';
       <input class="input" type="email" placeholder="e.g. alex@example.com">
     </div>
   </div>
-
   <div class="field">
     <label class="label">Password</label>
     <div class="control">
       <input class="input" type="password" placeholder="********">
     </div>
   </div>
+  
+  <button>Log In</button>
 
-<button is-link onclick="document.location='//localhost:62554/'">Log In</button>
-
-
-  <p class="control">
-  <button class is-link onclick="document.location='//localhost:62845/'">
-      Don't have an account? Sign up now!
-    </button>
-  </p>
+<nav>
+  <ul>
+  <li><button [routerLink]="['/Signup']">Don't have an account? Sign up now!</button></li>
+  </ul>
+  </nav>
 
 </form>
-
   `,
   styles: [`
      `]
 })
 
-export class CComponent {
+export class BComponent implements OnInit {
+
+  constructor() {
+    document.title = 'Login Page';
+  }
+
+  ngOnInit() {
+  }
 
 }
+
